@@ -1,0 +1,49 @@
+{
+    "name": "inviqa/clearpay-api-client",
+    "description": "PHP library for Clearpay payments API v2",
+    "type": "library",
+    "license": "proprietary",
+    "require": {
+        "php": "^7.2",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "behat/behat": "^3.6",
+        "phpspec/phpspec": "^6.1",
+        "phpstan/phpstan": "^0.12.17",
+        "phpunit/phpunit": "^8.5",
+        "squizlabs/php_codesniffer": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "": ["src"]
+        }
+    },
+    "scripts": {
+        "sniff": "bin/phpcs --colors --cache --standard=PSR2 -p -s -v src/",
+        "beauty": "bin/phpcbf --standard=PSR2 src/",
+        "static": "bin/phpstan analyse src --level=max --ansi --verbose",
+        "spec": "bin/phpspec run --format=pretty --no-code-generation --stop-on-failure --ansi",
+        "feature": "bin/behat -f pretty --stop-on-failure --colors",
+        "integration": "bin/phpunit",
+        "test": [
+            "@test-quality",
+            "@test-unit",
+            "@test-acceptance"
+        ],
+        "test-quality": [
+            "@sniff",
+            "@static"
+        ],
+        "test-unit": [
+            "@spec"
+        ],
+        "test-acceptance": [
+            "@feature"
+        ]
+    },
+    "config": {
+        "sort-packages": true,
+        "bin-dir": "bin"
+    }
+}
