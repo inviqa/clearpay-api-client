@@ -1,0 +1,8 @@
+default:
+    suites:
+        integration:
+            contexts:
+                - Contexts\CreateCheckoutContext:
+                      cassettePath: '%paths.base%/features/fixtures/php-vcr-cassettes'
+                - Contexts\GetConfigContext:
+                      cassettePath: '%paths.base%/features/fixtures/php-vcr-cassettes'

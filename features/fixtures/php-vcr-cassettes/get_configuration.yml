@@ -1,0 +1,31 @@
+
+-
+    request:
+        method: GET
+        url: 'https://api.eu-sandbox.afterpay.com/v2/configuration'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            Accept: null
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Date: 'Tue, 31 Mar 2020 14:13:16 GMT'
+            Content-Type: application/json
+            Content-Length: '152'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=ddd097a71cf8ea173cf6d5be82d9888121585663996; expires=Thu, 30-Apr-20 14:13:16 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            Cache-Control: 'private, no-transform, max-age=1800'
+            HTTP_CORRELATION_ID: xi66ae6pd5n5ypbmhrdijgg35e
+            Vary: Accept-Encoding
+            Accept-Ranges: bytes
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 57caab8a6aface1b-LHR
+        body: "{\n  \"minimumAmount\" : {\n    \"amount\" : \"10.00\",\n    \"currency\" : \"GBP\"\n  },\n  \"maximumAmount\" : {\n    \"amount\" : \"1000.00\",\n    \"currency\" : \"GBP\"\n  }\n}"

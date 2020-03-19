@@ -1,0 +1,31 @@
+
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/checkouts'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            Content-Type: application/json
+            Accept: application/json
+        body: '{"amount":{"amount":"30.00","currency":"GBP"},"consumer":{"phoneNumber":"0123456789","givenNames":"Testy","surname":"testerson","email":"name@example.com"},"merchant":{"redirectConfirmUrl":"https:\/\/example.com\/checkout\/confirm","redirectCancelUrl":"https:\/\/example.com\/checkout\/cancel"}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Date: 'Tue, 31 Mar 2020 14:11:25 GMT'
+            Content-Type: application/json
+            Content-Length: '251'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d62a91b2fbea92adf1f5e13648985e2531585663885; expires=Thu, 30-Apr-20 14:11:25 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: cd6upemao5btxbzrcm7gkthwuu
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 57caa8d30c84bba0-LHR
+        body: "{\n  \"token\" : \"003.9nij5goj8hf5guvc0tisfoj3r1024tqol11j32h4vhuko274\",\n  \"expires\" : \"2020-03-31T17:11:25.422Z\",\n  \"redirectCheckoutUrl\" : \"https://portal.sandbox.clearpay.co.uk/uk/checkout/?token=003.9nij5goj8hf5guvc0tisfoj3r1024tqol11j32h4vhuko274\"\n}"
