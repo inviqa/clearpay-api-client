@@ -5,7 +5,8 @@
     "license": "proprietary",
     "require": {
         "php": "^7.2",
-        "ext-json": "*"
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^6.5"
     },
     "require-dev": {
         "behat/behat": "^3.6",
