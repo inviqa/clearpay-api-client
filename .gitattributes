@@ -1,6 +1,7 @@
 .gitattributes export-ignore
 .gitignore export-ignore
 docker-compose.yml export-ignore
+phpstan.neon export-ignore
 Jenkinsfile export-ignore
 /features export-ignore
 /spec export-ignore
