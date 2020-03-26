@@ -10,6 +10,7 @@
     },
     "require-dev": {
         "behat/behat": "^3.6",
+        "php-vcr/php-vcr": "^1.4",
         "phpspec/phpspec": "^6.1",
         "phpstan/phpstan": "^0.12.17",
         "phpunit/phpunit": "^8.5",
