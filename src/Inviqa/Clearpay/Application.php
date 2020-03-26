@@ -27,13 +27,17 @@ class Application
     public function __construct(Config $config)
     {
         $this->config = $config;
-        $clientFactory = new Factory();
-        $this->client = $clientFactory->create($config);
+        $this->client = (new Factory)->create($config);
         $this->configurationProvider = new ConfigurationProvider($this->client, $this->config);
     }
 
     public function getConfiguration(): ConfigurationResponse
     {
         return $this->configurationProvider->getConfiguration();
+    }
+
+    public function createCheckout(array $params = []): bool
+    {
+        return true;
     }
 }
