@@ -3,6 +3,7 @@
 namespace Inviqa\Clearpay\Http;
 
 use GuzzleHttp\Client as GuzzleHttp;
+use Inviqa\Clearpay\Http\Response\HttpResponse;
 
 class GuzzleAdapter implements Adapter
 {
@@ -21,7 +22,13 @@ class GuzzleAdapter implements Adapter
      */
     public function get(string $uri, $options = [])
     {
-        return $this->guzzleHttp->get($uri, $options);
+        try{
+            $response = $this->guzzleHttp->get($uri, $options);
+        }catch (\Exception $e) {
+            return HttpResponse::fromError($e->getMessage());
+        }
+
+        return HttpResponse::fromContent($response->getBody()->getContents());
     }
 
     /**
