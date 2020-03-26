@@ -16,9 +16,9 @@ class GetConfigContext implements Context
 
     private $response;
 
-    public function __construct()
+    public function __construct(string $username, string $password)
     {
-        $this->application = new Application(new TestConfig());
+        $this->application = new Application(new TestConfig($username, $password));
     }
 
     /**

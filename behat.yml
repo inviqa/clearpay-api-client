@@ -2,4 +2,6 @@ default:
     suites:
         domain:
             contexts:
-                - GetConfigContext
+                - GetConfigContext:
+                      username: '400123968'
+                      password: 'b8218f6fe7e42d5653d78cd607ea0638a6379113d3492c9700ab877a9d2c1347464de0094301bfb6a69b27590d7e57800ab6494ac87a60299542844e0f42fa8f'

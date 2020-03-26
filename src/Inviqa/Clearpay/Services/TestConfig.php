@@ -6,19 +6,29 @@ use Inviqa\Clearpay\Config;
 
 class TestConfig implements Config
 {
-    public function isTestMode(): bool
+    /**
+     * @var string
+     */
+    private $username;
+    /**
+     * @var string
+     */
+    private $password;
+
+    public function __construct(string $username, string $password)
     {
-        return true;
+        $this->username = $username;
+        $this->password = $password;
     }
 
     public function username(): string
     {
-        return "123456";
+        return $this->username;
     }
 
     public function password(): string
     {
-        return "sdfadfgg";
+        return $this->password;
     }
 
     public function uri(): string
