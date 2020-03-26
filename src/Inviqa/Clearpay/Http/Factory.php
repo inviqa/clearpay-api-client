@@ -8,7 +8,7 @@ use Inviqa\Clearpay\Services\FakeClient;
 
 class Factory
 {
-    public function create(Config $config) : Adapter
+    public function create(Config $config): Adapter
     {
         if ($config->isTestMode()) {
             return new FakeClient();

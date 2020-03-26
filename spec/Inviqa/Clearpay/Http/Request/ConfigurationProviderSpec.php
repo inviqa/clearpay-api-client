@@ -17,6 +17,7 @@ class ConfigurationProviderSpec extends ObjectBehavior
     function it_gets_successful_configuration_response(Adapter $client, Config $config, HttpResponse $httpResponse) {
         $config->uri()->willReturn('https://api.eu-sandbox.afterpay.com/v2/');
         $client->get('https://api.eu-sandbox.afterpay.com/v2/configuration')->willReturn($httpResponse);
+        $httpResponse->content()->willReturn('some content');
 
         $this->getConfiguration($client, $config)->shouldBeAnInstanceOf(ConfigurationResponse::class);
     }

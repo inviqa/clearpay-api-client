@@ -13,7 +13,7 @@ class HttpResponse
     {
     }
 
-    public static function fromContent(string $content)
+    public static function fromContent(string $content): HttpResponse
     {
         $instance = new self;
         $instance->content = $content;
@@ -21,7 +21,7 @@ class HttpResponse
         return $instance;
     }
 
-    public static function fromError(string $error)
+    public static function fromError(string $error): HttpResponse
     {
         $instance = new self;
         $instance->content = $error;
@@ -29,7 +29,7 @@ class HttpResponse
         return $instance;
     }
 
-    public function content()
+    public function content(): string
     {
         return $this->content;
     }

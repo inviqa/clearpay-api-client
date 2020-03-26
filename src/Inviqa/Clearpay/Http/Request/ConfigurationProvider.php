@@ -25,7 +25,7 @@ class ConfigurationProvider
         $this->config = $config;
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): ConfigurationResponse
     {
         return new ConfigurationResponse($this->client->get($this->config->uri() . self::CONFIG_URI));
     }

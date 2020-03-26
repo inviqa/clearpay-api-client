@@ -4,7 +4,7 @@ namespace Inviqa\Clearpay\Services;
 
 class ConfigurationFactory
 {
-    public static function successfulConfigurationResponse()
+    public static function successfulConfigurationResponse(): string
     {
         return '{
             "minimumAmount" : {

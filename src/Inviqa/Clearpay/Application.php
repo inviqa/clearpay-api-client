@@ -19,14 +19,20 @@ class Application
      */
     private $config;
 
+    /**
+     * @var ConfigurationProvider
+     */
+    private $configurationProvider;
+
     public function __construct(Config $config)
     {
         $this->config = $config;
-        $this->client = Factory::create($config);
+        $clientFactory = new Factory();
+        $this->client = $clientFactory->create($config);
         $this->configurationProvider = new ConfigurationProvider($this->client, $this->config);
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): ConfigurationResponse
     {
         return $this->configurationProvider->getConfiguration();
     }

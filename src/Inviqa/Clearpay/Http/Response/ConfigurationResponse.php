@@ -38,7 +38,7 @@ class ConfigurationResponse
         $this->maximumAmount = $this->extractMaximumAmount();
     }
 
-    public function isSuccessful()
+    public function isSuccessful(): bool
     {
         return $this->success;
     }
@@ -91,7 +91,7 @@ class ConfigurationResponse
         $this->maximumAmount = $maximumAmount;
     }
 
-    private function extractCurrencyCode()
+    private function extractCurrencyCode(): string
     {
         if (!empty($this->responseParams['minimumAmount']['currency'])) {
             return $this->responseParams['minimumAmount']['currency'];
@@ -100,7 +100,7 @@ class ConfigurationResponse
         return '';
     }
 
-    private function extractMinimumAmount()
+    private function extractMinimumAmount(): string
     {
         if (!empty($this->responseParams['minimumAmount']['amount'])) {
             return $this->responseParams['minimumAmount']['amount'];
@@ -109,7 +109,7 @@ class ConfigurationResponse
         return '';
     }
 
-    private function extractMaximumAmount()
+    private function extractMaximumAmount(): string
     {
         if (!empty($this->responseParams['maximumAmount']['amount'])) {
             return $this->responseParams['maximumAmount']['amount'];
