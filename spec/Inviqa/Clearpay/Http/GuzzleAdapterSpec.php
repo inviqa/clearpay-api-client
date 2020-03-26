@@ -3,8 +3,11 @@
 namespace spec\Inviqa\Clearpay\Http;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Stream;
 use Inviqa\Clearpay\Http\Adapter;
 use Inviqa\Clearpay\Http\GuzzleAdapter;
+use Inviqa\Clearpay\Http\Response\HttpResponse;
 use PhpSpec\ObjectBehavior;
 
 class GuzzleAdapterSpec extends ObjectBehavior
@@ -20,11 +23,22 @@ class GuzzleAdapterSpec extends ObjectBehavior
         $this->shouldImplement(Adapter::class);
     }
 
-    function it_can_make_http_get_request(Client $client)
+    function it_can_make_http_get_request(Client $client, Response $response, Stream $stream)
     {
-        $this->get('/configuration', []);
+        $client->get('/configuration', [])->willReturn($response);
+        $response->getBody()->willReturn($stream);
+        $stream->getContents()->willReturn('{
+                "minimumAmount" : {
+                "amount" : "10.00",
+                "currency" : "GBP"
+            },
+                "maximumAmount" : {
+                "amount" : "1000.00",
+                "currency" : "GBP"
+            }
+        }');
+        $this->get('/configuration', [])->shouldBeAnInstanceOf(HttpResponse::class);
 
-        $client->get('/configuration', [])->shouldHaveBeenCalled();
     }
 
     function it_can_make_http_post_request(Client $client)
