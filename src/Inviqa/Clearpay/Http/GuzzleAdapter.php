@@ -22,9 +22,9 @@ class GuzzleAdapter implements Adapter
      */
     public function get(string $uri, $options = [])
     {
-        try{
+        try {
             $response = $this->guzzleHttp->get($uri, $options);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return HttpResponse::fromError($e->getMessage());
         }
 
