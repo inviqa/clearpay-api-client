@@ -6,7 +6,7 @@
     "require": {
         "php": "^7.2",
         "ext-json": "*",
-        "guzzlehttp/guzzle": "^6.5"
+        "guzzlehttp/guzzle": "^6.2"
     },
     "require-dev": {
         "behat/behat": "^3.6",
