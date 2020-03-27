@@ -2,19 +2,27 @@
 
 namespace Inviqa\Clearpay\Http;
 
-use GuzzleHttp\Client as GuzzleHttp;
+use Http\Client\HttpClient;
+use Http\Message\RequestFactory;
 use Inviqa\Clearpay\Http\Response\HttpResponse;
 
 class GuzzleAdapter implements Adapter
 {
     /**
-     * @var GuzzleHttp
+     * @var HttpClient
      */
-    private $guzzleHttp;
+    private $httpClient;
+    /**
+     * @var RequestFactory
+     */
+    private $requestFactory;
 
-    public function __construct(GuzzleHttp $guzzleHttp)
-    {
-        $this->guzzleHttp = $guzzleHttp;
+    public function __construct(
+        HttpClient $httpClient,
+        RequestFactory $requestFactory
+    ) {
+        $this->httpClient = $httpClient;
+        $this->requestFactory = $requestFactory;
     }
 
     /**
@@ -23,7 +31,14 @@ class GuzzleAdapter implements Adapter
     public function get(string $uri, $options = [])
     {
         try {
-            $response = $this->guzzleHttp->get($uri, $options);
+            $response = $this->httpClient->sendRequest(
+                $this->requestFactory->createRequest(
+                    'GET',
+                    $uri,
+                    [],
+                    ''
+                )
+            );
         } catch (\Exception $e) {
             return HttpResponse::fromError($e->getMessage());
         }
@@ -36,6 +51,13 @@ class GuzzleAdapter implements Adapter
      */
     public function post(string $uri, $options = [])
     {
-        return $this->guzzleHttp->post($uri, $options);
+        $response = $this->httpClient->sendRequest(
+            $this->requestFactory->createRequest(
+                'POST',
+                $uri,
+                [],
+                ''
+            )
+        );
     }
 }
