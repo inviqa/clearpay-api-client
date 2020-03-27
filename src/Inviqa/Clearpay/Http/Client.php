@@ -6,7 +6,7 @@ use Http\Client\HttpClient;
 use Http\Message\RequestFactory;
 use Inviqa\Clearpay\Http\Response\HttpResponse;
 
-class GuzzleAdapter implements Adapter
+class Client implements Adapter
 {
     /**
      * @var HttpClient

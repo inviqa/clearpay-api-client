@@ -4,7 +4,7 @@ namespace spec\Inviqa\Clearpay\Http;
 
 use Inviqa\Clearpay\Config;
 use Inviqa\Clearpay\Http\Factory;
-use Inviqa\Clearpay\Http\GuzzleAdapter;
+use Inviqa\Clearpay\Http\Client;
 use PhpSpec\ObjectBehavior;
 
 class FactorySpec extends ObjectBehavior
@@ -23,7 +23,7 @@ class FactorySpec extends ObjectBehavior
 
     function it_returns_a_guzzle_client(Config $config)
     {
-        $result = $this->create($config)->shouldBeAnInstanceOf(GuzzleAdapter::class);
+        $result = $this->create($config)->shouldBeAnInstanceOf(Client::class);
 
         $config->uri()->shouldHaveBeenCalled();
         $config->username()->shouldHaveBeenCalled();

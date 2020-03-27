@@ -5,14 +5,14 @@ namespace spec\Inviqa\Clearpay\Http;
 use Http\Client\HttpClient;
 use Http\Message\RequestFactory;
 use Inviqa\Clearpay\Http\Adapter;
-use Inviqa\Clearpay\Http\GuzzleAdapter;
+use Inviqa\Clearpay\Http\Client;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
-class GuzzleAdapterSpec extends ObjectBehavior
+class ClientSpec extends ObjectBehavior
 {
     function let(
         HttpClient $httpClient,
@@ -40,7 +40,7 @@ class GuzzleAdapterSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType(GuzzleAdapter::class);
+        $this->shouldHaveType(Client::class);
         $this->shouldImplement(Adapter::class);
     }
 
