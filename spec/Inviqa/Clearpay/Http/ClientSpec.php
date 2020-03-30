@@ -35,6 +35,8 @@ class ClientSpec extends ObjectBehavior
         $httpClient->sendRequest(Argument::type(RequestInterface::class))
             ->willReturn($response);
 
+        $response->getStatusCode()->willReturn(200);
+
         $this->beConstructedWith($httpClient, $requestFactory);
     }
 
@@ -72,7 +74,7 @@ class ClientSpec extends ObjectBehavior
             'POST',
             'create',
             [],
-            ''
+            null
         )->shouldHaveBeenCalled();
 
         $httpClient->sendRequest($request)->shouldHaveBeenCalled();

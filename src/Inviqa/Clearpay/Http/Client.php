@@ -5,6 +5,8 @@ namespace Inviqa\Clearpay\Http;
 use Http\Client\HttpClient;
 use Http\Message\RequestFactory;
 use Inviqa\Clearpay\Http\Response\HttpResponse;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class Client implements Adapter
 {
@@ -16,6 +18,10 @@ class Client implements Adapter
      * @var RequestFactory
      */
     private $requestFactory;
+    /**
+     * @var ExceptionDelegator
+     */
+    private $exceptionDelegator;
 
     public function __construct(
         HttpClient $httpClient,
@@ -23,6 +29,7 @@ class Client implements Adapter
     ) {
         $this->httpClient = $httpClient;
         $this->requestFactory = $requestFactory;
+        $this->exceptionDelegator = new ExceptionDelegator;
     }
 
     /**
@@ -49,15 +56,37 @@ class Client implements Adapter
     /**
      * @inheritDoc
      */
-    public function post(string $uri, $options = [])
+    public function post(string $uri, array $headers = [], $body = null)
     {
-        $response = $this->httpClient->sendRequest(
-            $this->requestFactory->createRequest(
-                'POST',
-                $uri,
-                [],
-                ''
-            )
+        return $this->handleRequest('POST', $uri, $headers, $body);
+    }
+
+    private function handleRequest(
+        string $method,
+        string $uri,
+        array $headers,
+        $body
+    ): ResponseInterface {
+        $request = $this->requestFactory->createRequest(
+            $method,
+            $uri,
+            $headers,
+            $body
+        );
+
+        $response = $this->httpClient->sendRequest($request);
+        $response = $this->delegateExceptions($request, $response);
+
+        return $response;
+    }
+
+    private function delegateExceptions(
+        RequestInterface $request,
+        ResponseInterface $response
+    ): ResponseInterface {
+        return $this->exceptionDelegator->transformResponseToException(
+            $request,
+            $response
         );
     }
 }

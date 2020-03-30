@@ -2,6 +2,10 @@
 
 namespace Inviqa\Clearpay\Http;
 
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UriInterface;
+
 interface Adapter
 {
     /**
@@ -13,10 +17,11 @@ interface Adapter
     public function get(string $uri, $options = []);
 
     /**
-     * @param string $uri
-     * @param array  $options
+     * @param string|UriInterface                  $uri
+     * @param array                                $headers
+     * @param resource|string|StreamInterface|null $body
      *
-     * @return mixed
+     * @return RequestInterface
      */
-    public function post(string $uri, $options = []);
+    public function post(string $uri, array $headers = [], $body = null);
 }
