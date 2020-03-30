@@ -2,7 +2,6 @@
 
 namespace Inviqa\Clearpay\Exception;
 
-
 class NotFoundHttpException extends ClientErrorHttpException
 {
     protected function additionalInformation(): string
