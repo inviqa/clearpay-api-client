@@ -23,7 +23,7 @@ class FactorySpec extends ObjectBehavior
 
     function it_returns_a_guzzle_client(Config $config)
     {
-        $result = $this->create($config)->shouldBeAnInstanceOf(Client::class);
+        $this::create($config)->shouldBeAnInstanceOf(Client::class);
 
         $config->uri()->shouldHaveBeenCalled();
         $config->username()->shouldHaveBeenCalled();

@@ -9,7 +9,7 @@ use Inviqa\Clearpay\Config;
 
 class Factory
 {
-    public function create(Config $config): Adapter
+    public static function create(Config $config): Adapter
     {
         return new Client(
             new GuzzleAdapter(
