@@ -2,6 +2,7 @@
 
 namespace Inviqa\Clearpay;
 
+use Inviqa\Clearpay\Api\Response\Checkout\Create;
 use Inviqa\Clearpay\Http\Adapter;
 use Inviqa\Clearpay\Http\Request\ConfigurationProvider;
 use Inviqa\Clearpay\Http\Response\ConfigurationResponse;
@@ -24,10 +25,12 @@ class Application
      */
     private $configurationProvider;
 
-    public function __construct(Config $config)
-    {
+    public function __construct(
+        Config $config,
+        ?Adapter $client = null
+    ) {
         $this->config = $config;
-        $this->client = (new Factory)->create($config);
+        $this->client = $client ?: Factory::create($config);
         $this->configurationProvider = new ConfigurationProvider($this->client, $this->config);
     }
 
@@ -36,8 +39,8 @@ class Application
         return $this->configurationProvider->getConfiguration();
     }
 
-    public function createCheckout(array $params = []): bool
+    public function createCheckout(array $params = []): Create
     {
-        return true;
+        return (new Api\CheckoutProvider($this->client))->createCheckout($params);
     }
 }
