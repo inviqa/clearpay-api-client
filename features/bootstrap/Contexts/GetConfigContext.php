@@ -1,11 +1,12 @@
 <?php
 
+namespace Contexts;
+
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
 use Inviqa\Clearpay\Application;
 use Inviqa\Clearpay\Http\Response\ConfigurationResponse;
 use PHPUnit\Framework\Assert;
-use Inviqa\Clearpay\Services\TestConfig;
 
 class GetConfigContext implements Context
 {
@@ -15,10 +16,16 @@ class GetConfigContext implements Context
     private $application;
 
     private $response;
+    /**
+     * @var \Services\HttpRecorder
+     */
+    private $httpRecorder;
 
-    public function __construct(string $username, string $password)
+    public function __construct(string $cassettePath)
     {
-        $this->application = new Application(new TestConfig($username, $password));
+        $config = new \Services\TestConfig($cassettePath);
+        $this->httpRecorder = $config->httpRecorder();
+        $this->application = new Application($config);
     }
 
     /**
@@ -26,6 +33,8 @@ class GetConfigContext implements Context
      */
     public function iMakeAGetConfigurationCall()
     {
+        $this->httpRecorder->insertCassette('get_configuration.yml');
+
         /** @var ConfigurationResponse response */
         $this->response = $this->application->getConfiguration();
     }

@@ -3,5 +3,7 @@ services:
   app:
     image: my127/php:7.2-fpm-stretch-console
     working_dir: "/app"
+    env_file:
+      - .env
     volumes:
       - ".:/app:delegated"
