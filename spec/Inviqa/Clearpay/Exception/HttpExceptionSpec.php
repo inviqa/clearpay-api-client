@@ -3,6 +3,7 @@
 namespace spec\Inviqa\Clearpay\Exception;
 
 use Inviqa\Clearpay\Exception\HttpException;
+use Inviqa\Clearpay\JsonHandler;
 use PhpSpec\ObjectBehavior;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -16,7 +17,7 @@ class HttpExceptionSpec extends ObjectBehavior
         StreamInterface $stream,
         \Exception $e
     ) {
-        $stream->getContents()->willReturn('');
+        $stream->getContents()->willReturn(json_encode([]));
         $stream->rewind()->willReturn($stream);
 
         $response->getBody()->willReturn($stream);

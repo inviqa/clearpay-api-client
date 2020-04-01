@@ -2,6 +2,8 @@
 
 namespace Inviqa\Clearpay\Api\Response\Checkout;
 
+use Inviqa\Clearpay\DateTime;
+use Inviqa\Clearpay\JsonHandler;
 use Psr\Http\Message\ResponseInterface;
 
 class Create
@@ -29,9 +31,12 @@ class Create
         $this->redirectCheckoutUrl = $redirectCheckoutUrl;
     }
 
-    public static function fromHttpResponse(ResponseInterface $response)
+    public static function fromHttpResponse(ResponseInterface $response): self
     {
-        $data = json_decode($response->getBody()->getContents(), true);
+        $data = JsonHandler::decode(
+            $response->getBody()->getContents(),
+            true
+        );
 
         return new self(
             $data['token'],
@@ -45,15 +50,11 @@ class Create
      *
      * @param string $time
      *
-     * @return \DateTimeImmutable|false
+     * @return \DateTimeInterface
      */
-    private static function toDateTime($time)
+    private static function toDateTime(string $time): \DateTimeInterface
     {
-        return \DateTimeImmutable::createFromFormat(
-            'Y-m-d\TH:i:s.u+',
-            $time,
-            new \DateTimeZone('UTC')
-        );
+        return DateTime::fromISO8601String($time)->asDateTime();
     }
 
     public function token(): string

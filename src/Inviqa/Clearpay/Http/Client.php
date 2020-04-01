@@ -7,6 +7,8 @@ use Http\Message\RequestFactory;
 use Inviqa\Clearpay\Http\Response\HttpResponse;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UriInterface;
 
 class Client implements Adapter
 {
@@ -56,14 +58,23 @@ class Client implements Adapter
     /**
      * @inheritDoc
      */
-    public function post(string $uri, array $headers = [], $body = null)
+    public function post($uri, array $headers = [], $body = null)
     {
         return $this->handleRequest('POST', $uri, $headers, $body);
     }
 
+    /**
+     * @param string                               $method
+     * @param string|UriInterface                  $uri
+     * @param array                                $headers
+     * @param resource|string|StreamInterface|null $body
+     *
+     * @return ResponseInterface
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
     private function handleRequest(
         string $method,
-        string $uri,
+        $uri,
         array $headers,
         $body
     ): ResponseInterface {

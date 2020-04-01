@@ -2,6 +2,7 @@
 
 namespace Inviqa\Clearpay\Exception;
 
+use Inviqa\Clearpay\JsonHandler;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -52,7 +53,7 @@ class HttpException extends \RuntimeException
         $responseBody = $response->getBody();
 
         $responseBody->rewind();
-        $decodedBody = json_decode($responseBody->getContents(), true);
+        $decodedBody = JsonHandler::decode($responseBody->getContents(), true);
         $responseBody->rewind();
 
         $message = isset($decodedBody['message']) ? $decodedBody['message'] : $response->getReasonPhrase();

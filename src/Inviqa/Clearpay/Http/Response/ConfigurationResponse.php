@@ -2,6 +2,8 @@
 
 namespace Inviqa\Clearpay\Http\Response;
 
+use Inviqa\Clearpay\JsonHandler;
+
 class ConfigurationResponse
 {
     /**
@@ -31,7 +33,7 @@ class ConfigurationResponse
 
     public function __construct(HttpResponse $httpResponse)
     {
-        $this->responseParams = json_decode($httpResponse->content(), true);
+        $this->responseParams = JsonHandler::decode($httpResponse->content(), true);
         $this->success = !empty($this->responseParams['minimumAmount']);
         $this->currencyCode = $this->extractCurrencyCode();
         $this->minimumAmount = $this->extractMinimumAmount();

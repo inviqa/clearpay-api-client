@@ -190,7 +190,7 @@ STRING;
   "errorId" : "b9fe2f40395b435d",
   "message" : "Unsupported Media Type",
   "httpStatusCode" : 415
-}"
+}
 STRING;
 
         $stream->getContents()->willReturn($contents);

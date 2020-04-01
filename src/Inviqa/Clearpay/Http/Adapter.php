@@ -24,5 +24,5 @@ interface Adapter
      *
      * @return ResponseInterface
      */
-    public function post(string $uri, array $headers = [], $body = null);
+    public function post($uri, array $headers = [], $body = null);
 }
