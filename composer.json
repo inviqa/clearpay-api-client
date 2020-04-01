@@ -29,7 +29,7 @@
         "static": "bin/phpstan analyse src --level=max --ansi --verbose",
         "spec": "bin/phpspec run --format=pretty --no-code-generation --stop-on-failure --ansi",
         "domain": "bin/behat --suite domain -f pretty --stop-on-failure --colors",
-        "integration": "bin/phpunit",
+        "integration": "bin/behat --suite integration -f pretty --stop-on-failure --colors --tags @http",
         "test": [
             "@test-quality",
             "@test-unit",

@@ -1,12 +1,13 @@
 <?php
 
-namespace Contexts\Domain;
+namespace Contexts\Integration;
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
 use Inviqa\Clearpay\Application;
 use PHPUnit\Framework\Assert;
 use Services\HttpMockConfig;
+use Services\TestConfig;
 
 class CreateCheckoutContext implements Context
 {
@@ -18,16 +19,10 @@ class CreateCheckoutContext implements Context
      * @var \Inviqa\Clearpay\Api\Response\Checkout\Create
      */
     private $result;
-    /**
-     * @var \Services\HttpRecorder
-     */
-    private $httpRecorder;
 
-    public function __construct(string $cassettePath)
+    public function __construct()
     {
-        $config = new HttpMockConfig($cassettePath);
-        $this->httpRecorder = $config->httpRecorder();
-        $this->application = new Application($config);
+        $this->application = new Application(new TestConfig);
     }
 
     /**
@@ -52,7 +47,6 @@ class CreateCheckoutContext implements Context
             ]
         ];
 
-        $this->httpRecorder->insertCassette('create_checkout.yml');
         $this->result = $this->application->createCheckout($params);
     }
 

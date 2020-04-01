@@ -6,3 +6,8 @@ default:
                       cassettePath: '%paths.base%/features/fixtures/php-vcr-cassettes'
                 - Contexts\Domain\GetConfigContext:
                       cassettePath: '%paths.base%/features/fixtures/php-vcr-cassettes'
+        integration:
+            contexts:
+                - Contexts\Integration\CreateCheckoutContext
+            filters:
+                tags: "@http"
