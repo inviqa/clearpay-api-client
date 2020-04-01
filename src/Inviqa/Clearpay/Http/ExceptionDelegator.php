@@ -8,6 +8,7 @@ use Inviqa\Clearpay\Exception\HttpException;
 use Inviqa\Clearpay\Exception\MethodNotAllowedHttpException;
 use Inviqa\Clearpay\Exception\NotAcceptableHttpException;
 use Inviqa\Clearpay\Exception\NotFoundHttpException;
+use Inviqa\Clearpay\Exception\PreconditionFailedHttpException;
 use Inviqa\Clearpay\Exception\ServerErrorHttpException;
 use Inviqa\Clearpay\Exception\UnauthorizedHttpException;
 use Inviqa\Clearpay\Exception\UnsupportedMediaTypeHttpException;
@@ -42,6 +43,10 @@ class ExceptionDelegator
 
         if ($response->getStatusCode() === 406) {
             throw NotAcceptableHttpException::fromHttpConversation($request, $response);
+        }
+
+        if ($response->getStatusCode() === 412) {
+            throw PreconditionFailedHttpException::fromHttpConversation($request, $response);
         }
 
         if ($response->getStatusCode() === 415) {
