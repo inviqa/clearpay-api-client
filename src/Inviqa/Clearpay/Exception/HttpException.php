@@ -48,6 +48,15 @@ class HttpException extends \RuntimeException
         return $this->response;
     }
 
+    public function clearpayErrorCode(): string
+    {
+        $decodedBody = $this->decodedResponseBody($this->httpResponse());
+
+        return isset($decodedBody['errorCode'])
+            ? $decodedBody['errorCode']
+            : '';
+    }
+
     private function exceptionMessage(ResponseInterface $response): string
     {
         $decodedBody = $this->decodedResponseBody($response);
