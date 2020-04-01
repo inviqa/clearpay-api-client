@@ -28,7 +28,7 @@
         "beauty": "bin/phpcbf --standard=PSR2 src/",
         "static": "bin/phpstan analyse src --level=max --ansi --verbose",
         "spec": "bin/phpspec run --format=pretty --no-code-generation --stop-on-failure --ansi",
-        "feature": "bin/behat -f pretty --stop-on-failure --colors",
+        "domain": "bin/behat --suite domain -f pretty --stop-on-failure --colors",
         "integration": "bin/phpunit",
         "test": [
             "@test-quality",
@@ -43,7 +43,7 @@
             "@spec"
         ],
         "test-acceptance": [
-            "@feature"
+            "@domain"
         ]
     },
     "config": {

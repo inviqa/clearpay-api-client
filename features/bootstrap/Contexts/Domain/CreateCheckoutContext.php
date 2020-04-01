@@ -1,6 +1,6 @@
 <?php
 
-namespace Contexts;
+namespace Contexts\Domain;
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
