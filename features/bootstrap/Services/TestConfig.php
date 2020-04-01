@@ -19,17 +19,17 @@ class TestConfig implements Config
 
     public function uri(): string
     {
-        return "https://api.eu-sandbox.afterpay.com/v2/";
+        return getenv('CLEARPAY_URI');
     }
 
     public function username(): string
     {
-        return '400123968';
+        return getenv('CLEARPAY_USERNAME');
     }
 
     public function password(): string
     {
-        return 'b8218f6fe7e42d5653d78cd607ea0638a6379113d3492c9700ab877a9d2c1347464de0094301bfb6a69b27590d7e57800ab6494ac87a60299542844e0f42fa8f';
+        return getenv('CLEARPAY_PASSWORD');
     }
 
     public function httpRecorder(): HttpRecorder
