@@ -1,13 +1,16 @@
 default:
     suites:
-        domain:
-            contexts:
-                - Contexts\Domain\CreateCheckoutContext:
-                      cassettePath: '%paths.base%/features/fixtures/php-vcr-cassettes'
-                - Contexts\Domain\GetConfigContext:
-                      cassettePath: '%paths.base%/features/fixtures/php-vcr-cassettes'
         integration:
             contexts:
-                - Contexts\Integration\CreateCheckoutContext
+                - Contexts\Integration\CreateCheckoutContext:
+                      cassettePath: '%paths.base%/features/fixtures/php-vcr-cassettes'
+                - Contexts\Integration\GetConfigContext:
+                      cassettePath: '%paths.base%/features/fixtures/php-vcr-cassettes'
+                - Contexts\Integration\PaymentAuthContext:
+                     cassettePath: '%paths.base%/features/fixtures/php-vcr-cassettes'
+        end2end:
+            contexts:
+                - Contexts\End2End\CreateCheckoutContext
+                - Contexts\End2End\PaymentAuthContext
             filters:
-                tags: "@http"
+                tags: "@end2end"

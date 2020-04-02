@@ -43,4 +43,13 @@ class Application
     {
         return (new Api\CheckoutProvider($this->client))->createCheckout($params);
     }
+
+    public function paymentAuth(string $token, string $requestId = null, string $merchantReference = null)
+    {
+        return (new Api\PaymentProvider($this->client))->auth(
+            $token,
+            $requestId,
+            $merchantReference
+        );
+    }
 }
