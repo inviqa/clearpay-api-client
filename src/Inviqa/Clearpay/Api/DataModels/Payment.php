@@ -37,7 +37,7 @@ class Payment
      */
     private $merchantReference;
     /**
-     * @var \DateTimeInterface
+     * @var \DateTimeInterface|null
      */
     private $createdAt;
     /**
@@ -49,13 +49,25 @@ class Payment
      */
     private $openToCaptureAmount;
 
+    /**
+     * Payment constructor.
+     *
+     * @param string                  $id
+     * @param string                  $token
+     * @param string                  $status
+     * @param string                  $paymentState
+     * @param string                  $merchantReference
+     * @param \DateTimeInterface|null $createdAt
+     * @param Money                   $originalAmount
+     * @param Money                   $openToCaptureAmount
+     */
     private function __construct(
         string $id,
         string $token,
         string $status,
         string $paymentState,
         string $merchantReference,
-        \DateTimeInterface $createdAt,
+        $createdAt,
         Money $originalAmount,
         Money $openToCaptureAmount
     ) {
@@ -77,7 +89,7 @@ class Payment
             $state['status'],
             $state['paymentState'],
             $state['merchantReference'],
-            DateTime::fromISO8601String($state['created'])->asDateTime(),
+            DateTime::fromTimeString($state['created'])->asDateTime(),
             Money::fromState($state['originalAmount']),
             Money::fromState($state['openToCaptureAmount'])
         );
@@ -108,7 +120,10 @@ class Payment
         return $this->merchantReference;
     }
 
-    public function createdAt(): \DateTimeInterface
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function createdAt()
     {
         return $this->createdAt;
     }

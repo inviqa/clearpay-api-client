@@ -11,7 +11,7 @@ class Refund
      */
     private $id;
     /**
-     * @var \DateTimeInterface
+     * @var \DateTimeInterface|null
      */
     private $refundedAt;
     /**
@@ -23,9 +23,17 @@ class Refund
      */
     private $amount;
 
+    /**
+     * Refund constructor.
+     *
+     * @param string                  $id
+     * @param \DateTimeInterface|null $refundedAt
+     * @param string                  $merchantReference
+     * @param Money                   $amount
+     */
     private function __construct(
         string $id,
-        \DateTimeInterface $refundedAt,
+        $refundedAt,
         string $merchantReference,
         Money $amount
     ) {
@@ -39,7 +47,7 @@ class Refund
     {
         return new self(
             $state['id'],
-            DateTime::fromISO8601String($state['refundedAt'])->asDateTime(),
+            DateTime::fromTimeString($state['refundedAt'])->asDateTime(),
             $state['merchantReference'],
             Money::fromState($state['amount'])
         );
@@ -50,7 +58,10 @@ class Refund
         return $this->id;
     }
 
-    public function refundedAt(): \DateTimeInterface
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function refundedAt()
     {
         return $this->refundedAt;
     }

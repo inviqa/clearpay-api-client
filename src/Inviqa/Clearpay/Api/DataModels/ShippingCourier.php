@@ -45,15 +45,8 @@ class ShippingCourier
 
     public static function fromState(array $state): self
     {
-        try {
-            $shippedAt = DateTime::fromISO8601String($state['shippedAt'])
-                ->asDateTime();
-        } catch (\Exception $e) {
-            $shippedAt = null;
-        }
-
         return new self(
-            $shippedAt,
+            DateTime::fromTimeString($state['shippedAt'])->asDateTime(),
             $state['name'] ?? '',
             $state['tracking'] ?? '',
             $state['priority'] ?? ''

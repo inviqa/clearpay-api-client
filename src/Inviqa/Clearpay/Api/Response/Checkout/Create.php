@@ -13,7 +13,7 @@ class Create
      */
     private $token;
     /**
-     * @var \DateTimeInterface
+     * @var \DateTimeInterface|null
      */
     private $expires;
     /**
@@ -21,9 +21,16 @@ class Create
      */
     private $redirectCheckoutUrl;
 
+    /**
+     * Create constructor.
+     *
+     * @param string                  $token
+     * @param \DateTimeInterface|null $expires
+     * @param string                  $redirectCheckoutUrl
+     */
     private function __construct(
         string $token,
-        \DateTimeInterface $expires,
+        $expires,
         string $redirectCheckoutUrl
     ) {
         $this->token = $token;
@@ -40,21 +47,9 @@ class Create
 
         return new self(
             $data['token'],
-            self::toDateTime($data['expires']),
+            DateTime::fromTimeString($data['expires'])->asDateTime(),
             $data['redirectCheckoutUrl']
         );
-    }
-
-    /**
-     * @see https://bugs.php.net/bug.php?id=51950
-     *
-     * @param string $time
-     *
-     * @return \DateTimeInterface
-     */
-    private static function toDateTime(string $time): \DateTimeInterface
-    {
-        return DateTime::fromISO8601String($time)->asDateTime();
     }
 
     public function token(): string
@@ -62,7 +57,10 @@ class Create
         return $this->token;
     }
 
-    public function expires(): \DateTimeInterface
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function expires()
     {
         return $this->expires;
     }

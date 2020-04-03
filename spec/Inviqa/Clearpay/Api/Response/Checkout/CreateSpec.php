@@ -45,10 +45,5 @@ JSON;
         $this->expires()
             ->format('Y-m-d H:i:s')
             ->shouldBe('2020-03-30 17:55:21');
-
-        $this->expires()
-            ->getTimezone()
-            ->getName()
-            ->shouldBe('UTC');
     }
 }

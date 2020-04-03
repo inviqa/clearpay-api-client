@@ -11,11 +11,11 @@ class PaymentEvent
      */
     private $id;
     /**
-     * @var \DateTimeInterface
+     * @var \DateTimeInterface|null
      */
     private $createdAt;
     /**
-     * @var \DateTimeInterface
+     * @var \DateTimeInterface|null
      */
     private $expiresAt;
     /**
@@ -27,10 +27,19 @@ class PaymentEvent
      */
     private $amount;
 
+    /**
+     * PaymentEvent constructor.
+     *
+     * @param string                  $id
+     * @param \DateTimeInterface|null $createdAt
+     * @param \DateTimeInterface|null $expiresAt
+     * @param string                  $type
+     * @param Money                   $amount
+     */
     private function __construct(
         string $id,
-        \DateTimeInterface $createdAt,
-        \DateTimeInterface $expiresAt,
+        $createdAt,
+        $expiresAt,
         string $type,
         Money $amount
     ) {
@@ -45,8 +54,8 @@ class PaymentEvent
     {
         return new self(
             $state['id'],
-            DateTime::fromISO8601String($state['created'])->asDateTime(),
-            DateTime::fromISO8601String($state['expires'])->asDateTime(),
+            DateTime::fromTimeString($state['created'])->asDateTime(),
+            DateTime::fromTimeString($state['expires'])->asDateTime(),
             $state['type'],
             Money::fromState($state['amount'])
         );
@@ -57,12 +66,18 @@ class PaymentEvent
         return $this->id;
     }
 
-    public function createdAt(): \DateTimeInterface
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function createdAt()
     {
         return $this->createdAt;
     }
 
-    public function expiresAt(): \DateTimeInterface
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function expiresAt()
     {
         return $this->expiresAt;
     }
