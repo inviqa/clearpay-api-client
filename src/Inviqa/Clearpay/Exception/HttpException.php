@@ -86,8 +86,8 @@ class HttpException extends \RuntimeException
                 $responseBody->getContents(),
                 true
             );
+        } catch (\Exception $e) {
         }
-        catch (\Exception $e) { }
 
         return [];
     }
