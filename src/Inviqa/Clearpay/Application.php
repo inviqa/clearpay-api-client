@@ -3,6 +3,7 @@
 namespace Inviqa\Clearpay;
 
 use Inviqa\Clearpay\Api\Response\Checkout\Create;
+use Inviqa\Clearpay\Api\Response\Payment\Auth;
 use Inviqa\Clearpay\Http\Adapter;
 use Inviqa\Clearpay\Http\Request\ConfigurationProvider;
 use Inviqa\Clearpay\Http\Response\ConfigurationResponse;
@@ -44,8 +45,11 @@ class Application
         return (new Api\CheckoutProvider($this->client))->createCheckout($params);
     }
 
-    public function paymentAuth(string $token, string $requestId = null, string $merchantReference = null)
-    {
+    public function paymentAuth(
+        string $token,
+        string $requestId = null,
+        string $merchantReference = null
+    ): Auth {
         return (new Api\PaymentProvider($this->client))->auth(
             $token,
             $requestId,
