@@ -1,7 +1,9 @@
 Feature: Initiate Clearpay payment Auth process
 
     Scenario: Successful payment auth request
-        Given I have a fresh checkout token
+        Given I have checkout token "003.plo9306h9kntg5bd6rhjgj7rua2qh718dphvkckg7gd54f72"
+        And I have have request id "successful-request"
+        And I have merchant reference "success"
         When I make a payment auth request
         Then I should have an "APPROVED" payment status
         And I should have an "AUTH_APPROVED" payment state

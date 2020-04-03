@@ -5,6 +5,7 @@ namespace Contexts\Integration;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\TableNode;
+use Inviqa\Clearpay\Api\Response\Payment\Auth;
 use Inviqa\Clearpay\Application;
 use Inviqa\Clearpay\Exception\ClientErrorHttpException;
 use Inviqa\Clearpay\Exception\HttpException;
@@ -27,7 +28,15 @@ class PaymentAuthContext implements Context
      */
     private $token;
     /**
-     * @var \Psr\Http\Message\ResponseInterface
+     * @var null|string
+     */
+    private $requestId = null;
+    /**
+     * @var null|string
+     */
+    private $merchantRef= null;
+    /**
+     * @var Auth
      */
     private $result;
     /**
@@ -78,13 +87,33 @@ class PaymentAuthContext implements Context
     }
 
     /**
+     * @Given I have have request id :requestId
+     */
+    public function iHaveHaveRequestId($requestId = null)
+    {
+        $this->requestId = $requestId;
+    }
+
+    /**
+     * @Given I have merchant reference :merchantRef
+     */
+    public function iHaveMerchantReference($merchantRef = null)
+    {
+        $this->merchantRef = $merchantRef;
+    }
+
+    /**
      * @When I make a payment auth request
      */
     public function iMakeAPaymentAuthRequest()
     {
         try {
             $this->httpRecorder->insertCassette('payment_auth.yml');
-            $this->result = $this->application->paymentAuth($this->token);
+            $this->result = $this->application->paymentAuth(
+                $this->token,
+                $this->requestId,
+                $this->merchantRef
+            );
             $this->httpRecorder->eject();
         }
         catch (HttpException $e) {
@@ -97,7 +126,10 @@ class PaymentAuthContext implements Context
      */
     public function iShouldHaveAnPaymentStatus($paymentStatus)
     {
-        Assert::assertEquals('APPROVED', $paymentStatus);
+        Assert::assertEquals(
+            $paymentStatus,
+            $this->result->status()
+        );
     }
 
     /**
@@ -105,7 +137,10 @@ class PaymentAuthContext implements Context
      */
     public function iShouldHaveAnPaymentState($paymentState)
     {
-        Assert::assertEquals('AUTH_APPROVED', $paymentState);
+        Assert::assertEquals(
+            $paymentState,
+            $this->result->paymentState()
+        );
     }
 
     /**
