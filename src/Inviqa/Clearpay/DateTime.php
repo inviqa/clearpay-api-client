@@ -4,7 +4,6 @@ namespace Inviqa\Clearpay;
 
 class DateTime
 {
-    const FORMAT = 'Y-m-d\TH:i:s.u+';
     /**
      * @var \DateTimeInterface
      */
@@ -27,8 +26,13 @@ class DateTime
      */
     private static function validate(string $time)
     {
+        $format = \DateTime::ISO8601;
+        if (isset($time[19]) && $time[19] === '.') {
+            $format = 'Y-m-d\\TH:i:s.uO';
+        }
+
         $result = \DateTimeImmutable::createFromFormat(
-            self::FORMAT,
+            $format,
             $time,
             new \DateTimeZone('UTC')
         );
@@ -39,7 +43,7 @@ class DateTime
                     'Time string "%s" does not create "%s" class from format "%s"',
                     $time,
                     \DateTimeInterface::class,
-                    self::FORMAT
+                    $format
                 )
             );
         }
