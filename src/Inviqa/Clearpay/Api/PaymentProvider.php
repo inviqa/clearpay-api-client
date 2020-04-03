@@ -2,6 +2,7 @@
 
 namespace Inviqa\Clearpay\Api;
 
+use Inviqa\Clearpay\Api\Response\Payment\Auth;
 use Inviqa\Clearpay\Http\Adapter;
 use Inviqa\Clearpay\JsonHandler;
 
@@ -21,20 +22,20 @@ class PaymentProvider
         string $token,
         string $requestId = null,
         string $merchantReference = null
-    ) {
-        $params = [
-            'requestId'         => $requestId,
-            'token'             => $token,
-            'merchantReference' => $merchantReference
-        ];
-
-         return $this->adapter->post(
+    ): Auth {
+        $response = $this->adapter->post(
             'payments/auth',
             [
                 'Content-Type' => 'application/json',
                 'Accept'       => 'application/json'
             ],
-            JsonHandler::encode($params)
+            JsonHandler::encode([
+                'requestId'         => $requestId,
+                'token'             => $token,
+                'merchantReference' => $merchantReference
+            ])
         );
+
+        return Auth::fromHttpResponse($response);
     }
 }
