@@ -9,21 +9,34 @@ class ConfigurationResponseSpec extends ObjectBehavior
 {
     function let(Response $response)
     {
-        $this->beConstructedWith($response);
+        $this->beConstructedFromHttpResponse($response);
     }
 
-    function it_returns_response_info_when_configuration_json_received(
+    function it_has_full_json_response(
         Response $response
     ) {
-        $response->asDecodedJson(true)->willReturn($this->data());
+        $response->asDecodedJson(true)->willReturn(
+            $this->fullJsonResponse()
+        );
 
-        $this->isSuccessful()->shouldBe(true);
         $this->getCurrencyCode()->shouldBe("GBP");
         $this->getMinimumAmount()->shouldBe("10.00");
         $this->getMaximumAmount()->shouldBe("1000.00");
     }
 
-    private function data()
+    function it_has_partial_json_response(
+        Response $response
+    ) {
+        $response->asDecodedJson(true)->willReturn(
+            $this->partialJsonResponse()
+        );
+
+        $this->getCurrencyCode()->shouldBe("GBP");
+        $this->getMinimumAmount()->shouldBe("0.00");
+        $this->getMaximumAmount()->shouldBe("500.00");
+    }
+
+    private function fullJsonResponse()
     {
         $json = <<<JSON
 {
@@ -37,7 +50,19 @@ class ConfigurationResponseSpec extends ObjectBehavior
     }
 }
 JSON;
+        return json_decode($json, true);
+    }
 
+    private function partialJsonResponse()
+    {
+        $json = <<<JSON
+{
+    "maximumAmount" : {
+        "amount" : "500.00",
+        "currency" : "GBP"
+    }
+}
+JSON;
         return json_decode($json, true);
     }
 }

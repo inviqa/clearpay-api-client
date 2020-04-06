@@ -7,116 +7,58 @@ use Inviqa\Clearpay\Http\Response;
 class ConfigurationResponse
 {
     /**
-     * @var bool
-     */
-    private $success;
-
-    /**
-     * @var string
-     */
-    private $currencyCode;
-
-    /**
      * @var string
      */
     private $minimumAmount;
-
+    /**
+     * @var string
+     */
+    private $minimumCurrency;
     /**
      * @var string
      */
     private $maximumAmount;
-
     /**
-     * @var array
+     * @var string
      */
-    private $responseParams;
+    private $maximumCurrency;
 
-    public function __construct(Response $response)
-    {
-        $this->responseParams = $response->asDecodedJson(true);
-        $this->success = !empty($this->responseParams['minimumAmount']);
-        $this->currencyCode = $this->extractCurrencyCode();
-        $this->minimumAmount = $this->extractMinimumAmount();
-        $this->maximumAmount = $this->extractMaximumAmount();
+    private function __construct(
+        string $minimumAmount,
+        string $minimumCurrency,
+        string $maximumAmount,
+        string $maximumCurrency
+    ) {
+        $this->minimumAmount = $minimumAmount;
+        $this->minimumCurrency = $minimumCurrency;
+        $this->maximumAmount = $maximumAmount;
+        $this->maximumCurrency = $maximumCurrency;
     }
 
-    public function isSuccessful(): bool
+    public static function fromHttpResponse(Response $response): self
     {
-        return $this->success;
+        $state = $response->asDecodedJson(true);
+
+        return new self(
+            $state['minimumAmount']['amount'] ?? '0.00',
+            $state['minimumAmount']['currency'] ?? '',
+            $state['maximumAmount']['amount'],
+            $state['maximumAmount']['currency']
+        );
     }
 
-    /**
-     * @return string
-     */
     public function getCurrencyCode(): string
     {
-        return $this->currencyCode;
+        return $this->maximumCurrency;
     }
 
-    /**
-     * @param string $currencyCode
-     */
-    public function setCurrencyCode(string $currencyCode): void
-    {
-        $this->currencyCode = $currencyCode;
-    }
-
-    /**
-     * @return string
-     */
     public function getMinimumAmount(): string
     {
         return $this->minimumAmount;
     }
 
-    /**
-     * @param string $minimumAmount
-     */
-    public function setMinimumAmount(string $minimumAmount): void
-    {
-        $this->minimumAmount = $minimumAmount;
-    }
-
-    /**
-     * @return string
-     */
     public function getMaximumAmount(): string
     {
         return $this->maximumAmount;
-    }
-
-    /**
-     * @param string $maximumAmount
-     */
-    public function setMaximumAmount(string $maximumAmount): void
-    {
-        $this->maximumAmount = $maximumAmount;
-    }
-
-    private function extractCurrencyCode(): string
-    {
-        if (!empty($this->responseParams['maximumAmount']['currency'])) {
-            return $this->responseParams['maximumAmount']['currency'];
-        }
-
-        return '';
-    }
-
-    private function extractMinimumAmount(): string
-    {
-        if (!empty($this->responseParams['minimumAmount']['amount'])) {
-            return $this->responseParams['minimumAmount']['amount'];
-        }
-
-        return '';
-    }
-
-    private function extractMaximumAmount(): string
-    {
-        if (!empty($this->responseParams['maximumAmount']['amount'])) {
-            return $this->responseParams['maximumAmount']['amount'];
-        }
-
-        return '';
     }
 }

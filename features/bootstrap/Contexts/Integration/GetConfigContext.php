@@ -2,6 +2,7 @@
 
 namespace Contexts\Integration;
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
 use Inviqa\Clearpay\Application;
@@ -15,6 +16,9 @@ class GetConfigContext implements Context
      */
     private $application;
 
+    /**
+     * @var ConfigurationResponse
+     */
     private $response;
     /**
      * @var \Services\HttpRecorder
@@ -40,27 +44,23 @@ class GetConfigContext implements Context
     }
 
     /**
-     * @Then the response should be successful
+     * @Then I should have :amount as a :absolute amount
      */
-    public function theResponseShouldBeSuccessful()
+    public function IShouldHaveAnAbsoluteAmount($amount, $absolute = 'minimum')
     {
-        Assert::assertTrue($this->response->isSuccessful());
+        if ($absolute === 'minimum') {
+            Assert::assertEquals($amount, $this->response->getMinimumAmount());
+            return;
+        }
+
+        Assert::assertEquals($amount, $this->response->getMaximumAmount());
     }
 
     /**
-     * @Then I should receive a config response
+     * @Then I should have :code as the currency
      */
-    public function iShouldReceiveAConfigResponse()
+    public function iShouldHaveAsTheCurrency($code)
     {
-        Assert::assertInstanceOf(ConfigurationResponse::class, $this->response);
-    }
-
-    /**
-     * @Then the config response should contain a minimum and maximum order value
-     */
-    public function theConfigResponseShouldContainAMinimumAndMaximumOrderValue()
-    {
-        Assert::assertNotEmpty($this->response->getMinimumAmount());
-        Assert::assertNotEmpty($this->response->getMaximumAmount());
+        Assert::assertEquals($code, $this->response->getCurrencyCode());
     }
 }
