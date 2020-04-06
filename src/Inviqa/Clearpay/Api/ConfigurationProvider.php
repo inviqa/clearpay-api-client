@@ -20,7 +20,7 @@ class ConfigurationProvider
 
     public function getConfiguration(): ConfigurationResponse
     {
-        return new ConfigurationResponse(
+        return ConfigurationResponse::fromHttpResponse(
             Response::fromHttpResponse(
                 $this->client->get('configuration')
             )
