@@ -1,0 +1,181 @@
+
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/checkouts'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            Content-Type: application/json
+            Accept: application/json
+        body: '{"amount":{"amount":"30.00","currency":"GBP"},"consumer":{"phoneNumber":"0123456789","givenNames":"Testy","surname":"testerson","email":"name@example.com"},"merchant":{"redirectConfirmUrl":"https:\/\/example.com\/checkout\/confirm","redirectCancelUrl":"https:\/\/example.com\/checkout\/cancel"}}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Date: 'Wed, 01 Apr 2020 16:11:04 GMT'
+            Content-Type: application/json
+            Content-Length: '251'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d2938a935c1f9af07fb3d23ff90b367e01585757464; expires=Fri, 01-May-20 16:11:04 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: j47emvmpqamzye4t7jwm3c4rui
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 57d395768c58dbfb-LHR
+        body: "{\n  \"token\" : \"003.plo9306h9kntg5bd6rhjgj7rua2qh718dphvkckg7gd54f72\",\n  \"expires\" : \"2020-04-01T19:11:04.278Z\",\n  \"redirectCheckoutUrl\" : \"https://portal.sandbox.clearpay.co.uk/uk/checkout/?token=003.plo9306h9kntg5bd6rhjgj7rua2qh718dphvkckg7gd54f72\"\n}"
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/payments/auth'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            Content-Type: application/json
+            Accept: application/json
+        body: '{"requestId":null,"token":"003.plo9306h9kntg5bd6rhjgj7rua2qh718dphvkckg7gd54f72","merchantReference":null}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '412'
+            message: 'Precondition Failed'
+        headers:
+            Date: 'Wed, 01 Apr 2020 16:11:04 GMT'
+            Content-Type: application/json
+            Content-Length: '160'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d08349addf4c92f2b6fc6359dcc9ca0551585757464; expires=Fri, 01-May-20 16:11:04 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: 3u4kfacul6nqfjuwdfa4olsawm
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 57d395798d89346e-LHR
+        body: "{\n  \"errorCode\" : \"invalid_order_transaction_status\",\n  \"errorId\" : \"5d0013ed4957ccab\",\n  \"message\" : \"Order has not been approved.\",\n  \"httpStatusCode\" : 412\n}"
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/payments/auth'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            Content-Type: application/json
+            Accept: application/json
+        body: '{"requestId":"successful-request","token":"003.plo9306h9kntg5bd6rhjgj7rua2qh718dphvkckg7gd54f72","merchantReference":"success"}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: 'OK'
+        headers:
+            Date: 'Wed, 01 Apr 2020 16:11:04 GMT'
+            Content-Type: application/json
+            Content-Length: '160'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d08349addf4c92f2b6fc6359dcc9ca0551585757464; expires=Fri, 01-May-20 16:11:04 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: 3u4kfacul6nqfjuwdfa4olsawm
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 57d395798d89346e-LHR
+        body: "{\"id\":\"12345678\",\"token\":\"003.plo9306h9kntg5bd6rhjgj7rua2qh718dphvkckg7gd54f72\",\"status\":\"APPROVED\",\"created\":\"2019-01-01T00:00:00.000Z\",\"originalAmount\":{\"amount\":\"100.00\",\"currency\":\"GBP\"},\"openToCaptureAmount\":{\"amount\":\"100.00\",\"currency\":\"GBP\"},\"paymentState\":\"AUTH_APPROVED\",\"merchantReference\":\"merchantOrderId-1234\",\"refunds\":[],\"orderDetails\":{},\"events\":[{\"id\":\"1OUR16OTqL3DgJ3ELlwKowU9v6K\",\"created\":\"2019-01-01T00:00:00.000Z\",\"expires\":\"2019-01-01T00:00:00.000Z\",\"type\":\"AUTH_APPROVED\",\"amount\":{\"amount\":\"100.00\",\"currency\":\"GBP\"}}]}"
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/payments/auth'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            Content-Type: application/json
+            Accept: application/json
+        body: '{"requestId":null,"token":"expired-token","merchantReference":null}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '402'
+            message: 'Payment Required'
+        headers:
+            Date: 'Wed, 01 Apr 2020 16:12:33 GMT'
+            Content-Type: application/json
+            Content-Length: '163'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=dbebb51eac8b463930f381c654afd8e5b1585757553; expires=Fri, 01-May-20 16:12:33 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: pfbrrygh4f3pp6rmyxcimtn5om
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 57d397a5ac7ce648-LHR
+        body: "{\n  \"errorCode\" : \"invalid_token\",\n  \"errorId\" : \"0dc42e1f4666d89e\",\n  \"message\" : \"Cannot complete payment, expired or invalid token.\",\n  \"httpStatusCode\" : 402\n}"
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/payments/auth'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            Content-Type: application/json
+            Accept: application/json
+        body: '{"requestId":"","token":"","merchantReference":""}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '422'
+            message: ''
+        headers:
+            Date: 'Fri, 03 Apr 2020 13:04:40 GMT'
+            Content-Type: application/json
+            Content-Length: '136'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=dd2d9ac8de7efacab3c93f23e8d0a78a81585919080; expires=Sun, 03-May-20 13:04:40 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: 6cogajldi6ccx3p4ipkbodz3jy
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 57e2ff2def4adbe3-LHR
+        body: "{\n  \"errorCode\" : \"invalid_object\",\n  \"errorId\" : \"b0a330bf3d7dc121\",\n  \"message\" : \"token may not be empty\",\n  \"httpStatusCode\" : 422\n}"
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/payments/auth'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            Content-Type: application/json
+            Accept: application/json
+        body: '{"requestId":null,"token":"","merchantReference":null}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '422'
+            message: ''
+        headers:
+            Date: 'Fri, 03 Apr 2020 14:36:21 GMT'
+            Content-Type: application/json
+            Content-Length: '136'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d73640dc850c2a05aef9501d7ccaad5641585924581; expires=Sun, 03-May-20 14:36:21 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: dwclcqa32tk7ia3zg7saeh5nom
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 57e38578ee58dbf3-LHR
+        body: "{\n  \"errorCode\" : \"invalid_object\",\n  \"errorId\" : \"6bf7c05f0978c37c\",\n  \"message\" : \"token may not be empty\",\n  \"httpStatusCode\" : 422\n}"

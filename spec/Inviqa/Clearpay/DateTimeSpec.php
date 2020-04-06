@@ -14,17 +14,26 @@ class DateTimeSpec extends ObjectBehavior
 
     function it_can_implement_datetime_interface()
     {
-        $this->beConstructedFromISO8601String('2020-03-31T18:39:04.425Z');
+        $this->beConstructedFromTimeString('2020-03-31T18:39:04.425Z');
 
-        $result = $this->asDateTime()->shouldBeAnInstanceOf(\DateTimeInterface::class);
+        $this->asDateTime()
+            ->format('Y-m-d H:i:s')
+            ->shouldBe('2020-03-31 18:39:04');
+    }
+
+    function it_can_handle_utc_offset()
+    {
+        $this->beConstructedfromTimeString('2019-01-01T00:00:00+10:00');
+
+        $this->asDateTime()
+            ->format('Y-m-d H:i:s')
+            ->shouldBe('2019-01-01 00:00:00');
     }
 
     function it_will_fail_with_invalid_time_string()
     {
-        $this->beConstructedFromISO8601String('bad string');
+        $this->beConstructedFromTimeString('');
 
-        $this->shouldThrow(\InvalidArgumentException::class)
-            ->duringInstantiation();
-
+        $this->asDateTime()->shouldBe(null);
     }
 }

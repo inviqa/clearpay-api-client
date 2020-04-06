@@ -4,50 +4,43 @@ namespace Inviqa\Clearpay;
 
 class DateTime
 {
-    const FORMAT = 'Y-m-d\TH:i:s.u+';
     /**
-     * @var \DateTimeInterface
+     * @var \DateTimeInterface|null
      */
     private $dateTime;
 
-    private function __construct(\DateTimeInterface $dateTime)
+    /**
+     * DateTime constructor.
+     *
+     * @param \DateTimeInterface|null $dateTime
+     */
+    private function __construct($dateTime)
     {
         $this->dateTime = $dateTime;
     }
 
-    public static function fromISO8601String(string $time): self
+    public static function fromTimeString(string $time = ''): self
     {
-        return new self(self::validate($time));
+        if (strlen($time) === 0) {
+            return new self(null);
+        }
+
+        return new self(self::toDateTimeImmutable($time));
     }
 
-    /**
-     * @param string $time
-     *
-     * @return \DateTimeImmutable
-     */
-    private static function validate(string $time)
-    {
-        $result = \DateTimeImmutable::createFromFormat(
-            self::FORMAT,
+    private static function toDateTimeImmutable(
+        string $time
+    ): \DateTimeInterface {
+        return new \DateTimeImmutable(
             $time,
             new \DateTimeZone('UTC')
         );
-
-        if (!$result instanceof \DateTimeInterface) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Time string "%s" does not create "%s" class from format "%s"',
-                    $time,
-                    \DateTimeInterface::class,
-                    self::FORMAT
-                )
-            );
-        }
-
-        return $result;
     }
 
-    public function asDateTime(): \DateTimeInterface
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function asDateTime()
     {
         return $this->dateTime;
     }

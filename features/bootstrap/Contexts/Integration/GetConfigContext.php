@@ -1,6 +1,6 @@
 <?php
 
-namespace Contexts;
+namespace Contexts\Integration;
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
@@ -23,7 +23,7 @@ class GetConfigContext implements Context
 
     public function __construct(string $cassettePath)
     {
-        $config = new \Services\TestConfig($cassettePath);
+        $config = new \Services\HttpMockConfig($cassettePath);
         $this->httpRecorder = $config->httpRecorder();
         $this->application = new Application($config);
     }

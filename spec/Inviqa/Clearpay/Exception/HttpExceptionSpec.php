@@ -67,4 +67,31 @@ JSON;
 
         $this->getMessage()->shouldStartWith('The request contains improperly formatted JSON');
     }
+
+    function it_has_empty_clearpay_error_code()
+    {
+        $this->clearpayErrorCode()->shouldBe('');
+    }
+
+    function it_has_clearpay_error_code(
+        ResponseInterface $response,
+        StreamInterface $stream
+    ) {
+        $json = <<<JSON
+{
+  "errorCode" : "invalid_json",
+  "errorId" : "3a96d8eab0d7ed1e",
+  "message" : "The request contains improperly formatted JSON",
+  "httpStatusCode" : 400
+}
+JSON;
+
+        $stream->getContents()->willReturn($json);
+        $response->getStatusCode()->willReturn(400);
+        $response->getReasonPhrase()->willReturn('Bad Request');
+
+        $this->clearpayErrorCode()->shouldBe('invalid_json');
+    }
+
+
 }
