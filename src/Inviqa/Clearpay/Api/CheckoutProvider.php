@@ -4,6 +4,7 @@ namespace Inviqa\Clearpay\Api;
 
 use Inviqa\Clearpay\Api\Response\Checkout\Create;
 use Inviqa\Clearpay\Http\Adapter;
+use Inviqa\Clearpay\Http\HeadersTrait;
 use Inviqa\Clearpay\Http\Response;
 use Inviqa\Clearpay\JsonHandler;
 
@@ -14,6 +15,8 @@ class CheckoutProvider
      */
     private $adapter;
 
+    use HeadersTrait;
+
     public function __construct(Adapter $adapter)
     {
         $this->adapter = $adapter;
@@ -23,10 +26,7 @@ class CheckoutProvider
     {
         $response = $this->adapter->post(
             'checkouts',
-            [
-                'Content-Type' => 'application/json',
-                'Accept'       => 'application/json'
-            ],
+            $this->defaultPostHeaders(),
             JsonHandler::encode($params)
         );
 

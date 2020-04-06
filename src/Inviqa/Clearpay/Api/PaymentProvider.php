@@ -4,6 +4,7 @@ namespace Inviqa\Clearpay\Api;
 
 use Inviqa\Clearpay\Api\Response\Payment\Auth;
 use Inviqa\Clearpay\Http\Adapter;
+use Inviqa\Clearpay\Http\HeadersTrait;
 use Inviqa\Clearpay\Http\Response;
 use Inviqa\Clearpay\JsonHandler;
 
@@ -13,6 +14,8 @@ class PaymentProvider
      * @var Adapter
      */
     private $adapter;
+
+    use HeadersTrait;
 
     public function __construct(Adapter $adapter)
     {
@@ -26,10 +29,7 @@ class PaymentProvider
     ): Auth {
         $response = $this->adapter->post(
             'payments/auth',
-            [
-                'Content-Type' => 'application/json',
-                'Accept'       => 'application/json'
-            ],
+            $this->defaultPostHeaders(),
             JsonHandler::encode([
                 'requestId' => $requestId,
                 'token' => $token,
@@ -52,10 +52,7 @@ class PaymentProvider
     ) {
         return $this->adapter->post(
             sprintf('payments/%s/refund', $orderId),
-            [
-                'Content-Type' => 'application/json',
-                'Accept'       => 'application/json'
-            ],
+            $this->defaultPostHeaders(),
             JsonHandler::encode([
                 'requestId'               => $requestId,
                 'amount'                  => [
