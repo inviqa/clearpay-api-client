@@ -3,27 +3,17 @@
 namespace spec\Inviqa\Clearpay\Api\Response\Checkout;
 
 use Inviqa\Clearpay\Api\Response\Checkout\Create;
+use Inviqa\Clearpay\Http\Response;
+use Inviqa\Clearpay\JsonHandler;
 use PhpSpec\ObjectBehavior;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
 
 class CreateSpec extends ObjectBehavior
 {
-    function let(
-        ResponseInterface $response,
-        StreamInterface $stream
-    )
+    function let(Response $response)
     {
-        $json = <<<JSON
-{
-  "token" : "003.q49q202qk7ev5ik8camb84u4rrvd23vqp2coav6b5juefrmi",
-  "expires" : "2020-03-30T17:55:21.085Z",
-  "redirectCheckoutUrl" : "https://portal.sandbox.clearpay.co.uk/uk/checkout/?token=003.q49q202qk7ev5ik8camb84u4rrvd23vqp2coav6b5juefrmi"
-}
-JSON;
-
-        $stream->getContents()->willReturn($json);
-        $response->getBody()->willReturn($stream);
+        $response->asDecodedJson(true)->willReturn(
+            $this->decodedJsonResponse()
+        );
 
         $this->beConstructedFromHttpResponse($response);
     }
@@ -45,5 +35,18 @@ JSON;
         $this->expires()
             ->format('Y-m-d H:i:s')
             ->shouldBe('2020-03-30 17:55:21');
+    }
+
+    private function decodedJsonResponse()
+    {
+        $json = <<<JSON
+{
+  "token" : "003.q49q202qk7ev5ik8camb84u4rrvd23vqp2coav6b5juefrmi",
+  "expires" : "2020-03-30T17:55:21.085Z",
+  "redirectCheckoutUrl" : "https://portal.sandbox.clearpay.co.uk/uk/checkout/?token=003.q49q202qk7ev5ik8camb84u4rrvd23vqp2coav6b5juefrmi"
+}
+JSON;
+
+        return JsonHandler::decode($json, true);
     }
 }
