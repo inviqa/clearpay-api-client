@@ -16,7 +16,6 @@ class PaymentProviderSpec extends ObjectBehavior
         ResponseInterface $response,
         StreamInterface $stream
     ) {
-        $stream->getContents()->willReturn($this->fullJsonResponseBody());
         $response->getBody()->willReturn($stream);
 
         $client->post(
@@ -34,8 +33,11 @@ class PaymentProviderSpec extends ObjectBehavior
     }
 
     function it_can_make_auth_request(
-        Adapter $client
+        Adapter $client,
+        StreamInterface $stream
     ) {
+        $stream->getContents()->willReturn($this->fullJsonAuthResponseBody());
+
         $requestId = uniqid();
         $token = 'TOKEN';
         $merchantRef = 'ORDER-100';
@@ -60,7 +62,47 @@ class PaymentProviderSpec extends ObjectBehavior
         )->shouldHaveBeenCalled();
     }
 
-    private function fullJsonResponseBody()
+    function it_can_make_a_refund_request(
+        Adapter $client,
+        StreamInterface $stream
+    ) {
+        $orderId = 'clearpay-order-id';
+        $requestId = 'request-id';
+        $refundAmount = '10.00';
+        $refundCurrency = 'GBP';
+        $merchantReference = 'merchant-order-ref';
+        $merchantRefundRef = 'merchant-refund-ref';
+
+        $this->refund(
+            $orderId,
+            $refundAmount,
+            $refundCurrency,
+            $requestId,
+            $merchantReference,
+            $merchantRefundRef
+        );
+
+        $expectedJson = json_encode([
+            'requestId'               => $requestId,
+            'amount'                  => [
+                'amount'   => $refundAmount,
+                'currency' => $refundCurrency
+            ],
+            'merchantReference'       => $merchantReference,
+            'refundMerchantReference' => $merchantRefundRef
+        ]);
+
+        $client->post(
+            'payments/' . $orderId . '/refund',
+            [
+                'Content-Type' => 'application/json',
+                'Accept'       => 'application/json'
+            ],
+            $expectedJson
+        )->shouldHaveBeenCalled();
+    }
+
+    private function fullJsonAuthResponseBody()
     {
         return <<<JSON
 {

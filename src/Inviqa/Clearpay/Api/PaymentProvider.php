@@ -31,14 +31,40 @@ class PaymentProvider
                 'Accept'       => 'application/json'
             ],
             JsonHandler::encode([
-                'requestId'         => $requestId,
-                'token'             => $token,
+                'requestId' => $requestId,
+                'token' => $token,
                 'merchantReference' => $merchantReference
             ])
         );
 
         return Auth::fromHttpResponse(
             Response::fromHttpResponse($response)
+        );
+    }
+
+    public function refund(
+        string $orderId,
+        string $refundAmount,
+        string $refundCurrency,
+        string $requestId = null,
+        string $merchantReference  = null,
+        string $refundMerchantReference = null
+    ) {
+        return $this->adapter->post(
+            sprintf('payments/%s/refund', $orderId),
+            [
+                'Content-Type' => 'application/json',
+                'Accept'       => 'application/json'
+            ],
+            JsonHandler::encode([
+                'requestId'               => $requestId,
+                'amount'                  => [
+                    'amount'   => $refundAmount,
+                    'currency' => $refundCurrency
+                ],
+                'merchantReference'       => $merchantReference,
+                'refundMerchantReference' => $refundMerchantReference
+            ])
         );
     }
 }
