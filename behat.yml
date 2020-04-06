@@ -6,7 +6,7 @@ default:
                       cassettePath: '%paths.base%/features/fixtures/php-vcr-cassettes'
                 - Contexts\Integration\GetConfigContext:
                       cassettePath: '%paths.base%/features/fixtures/php-vcr-cassettes'
-                - Contexts\Integration\PaymentAuthContext:
+                - Contexts\Integration\PaymentOrderContext:
                      cassettePath: '%paths.base%/features/fixtures/php-vcr-cassettes'
         end2end:
             contexts:

@@ -13,7 +13,7 @@ use PHPUnit\Framework\Assert;
 use Services\HttpMockConfig;
 use Services\TestConfig;
 
-class PaymentAuthContext implements Context
+class PaymentOrderContext implements Context
 {
     /**
      * @var Application
@@ -43,12 +43,46 @@ class PaymentAuthContext implements Context
      * @var string
      */
     private $clearpayErrorCode;
+    private $resultRefund;
+    private $orderId;
 
     public function __construct(string $cassettePath)
     {
         $config = new HttpMockConfig($cassettePath);
         $this->httpRecorder = $config->httpRecorder();
         $this->application = new Application($config);
+    }
+
+    /**
+     * @Given I have Order Id :orderId
+     */
+    public function iHaveOrderId($orderId)
+    {
+        $this->orderId = $orderId;
+    }
+
+    /**
+     * @Given I have Request Id :requestId
+     */
+    public function iHaveRequestId($requestId)
+    {
+        $this->requestId = $requestId;
+    }
+
+    /**
+     * @Given I have Merchant Reference :merchantRef
+     */
+    public function iHaveMerchantReference($merchantRef)
+    {
+        $this->merchantRef = $merchantRef;
+    }
+
+    /**
+     * @Given I have have request id :requestId
+     */
+    public function iHaveHaveRequestId($requestId = null)
+    {
+        $this->requestId = $requestId;
     }
 
     /**
@@ -79,27 +113,33 @@ class PaymentAuthContext implements Context
     }
 
     /**
+     * @When I request a :amount refund in :currency for the order
+     */
+    public function iRequestARefundInForTheOrder($amount, $currency)
+    {
+        try {
+            $this->httpRecorder->insertCassette('payment_refund.yml');
+            $this->resultRefund = $this->application->paymentRefund(
+                $this->orderId,
+                $amount,
+                $currency,
+                $this->requestId,
+                $this->merchantRef,
+                $refundMerchantRef = null
+            );
+            $this->httpRecorder->eject();
+        }
+        catch (HttpException $e) {
+            $this->clearpayErrorCode = $e->clearpayErrorCode();
+        }
+    }
+
+    /**
      * @Given I have checkout token :token
      */
     public function iHaveCheckoutToken(string $token = '')
     {
         $this->token = $token;
-    }
-
-    /**
-     * @Given I have have request id :requestId
-     */
-    public function iHaveHaveRequestId($requestId = null)
-    {
-        $this->requestId = $requestId;
-    }
-
-    /**
-     * @Given I have merchant reference :merchantRef
-     */
-    public function iHaveMerchantReference($merchantRef = null)
-    {
-        $this->merchantRef = $merchantRef;
     }
 
     /**
