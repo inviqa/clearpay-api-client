@@ -3,8 +3,7 @@
 namespace Inviqa\Clearpay\Api\Response\Payment;
 
 use Inviqa\Clearpay\Api\DataModels\Payment;
-use Inviqa\Clearpay\JsonHandler;
-use Psr\Http\Message\ResponseInterface;
+use Inviqa\Clearpay\Http\Response;
 
 class Auth
 {
@@ -18,12 +17,12 @@ class Auth
         $this->payment = $payment;
     }
 
-    public static function fromHttpResponse(ResponseInterface $response): self
+    public static function fromHttpResponse(Response $response): self
     {
-        $state = JsonHandler::decode($response->getBody()->getContents(), true);
-
         return new self(
-            Payment::fromState($state)
+            Payment::fromState(
+                $response->asDecodedJson(true)
+            )
         );
     }
 
