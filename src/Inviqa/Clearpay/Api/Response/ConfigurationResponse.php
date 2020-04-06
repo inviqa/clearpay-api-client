@@ -1,8 +1,8 @@
 <?php
 
-namespace Inviqa\Clearpay\Http\Response;
+namespace Inviqa\Clearpay\Api\Response;
 
-use Inviqa\Clearpay\JsonHandler;
+use Inviqa\Clearpay\Http\Response;
 
 class ConfigurationResponse
 {
@@ -31,9 +31,9 @@ class ConfigurationResponse
      */
     private $responseParams;
 
-    public function __construct(HttpResponse $httpResponse)
+    public function __construct(Response $response)
     {
-        $this->responseParams = JsonHandler::decode($httpResponse->content(), true);
+        $this->responseParams = $response->asDecodedJson(true);
         $this->success = !empty($this->responseParams['minimumAmount']);
         $this->currencyCode = $this->extractCurrencyCode();
         $this->minimumAmount = $this->extractMinimumAmount();
@@ -95,8 +95,8 @@ class ConfigurationResponse
 
     private function extractCurrencyCode(): string
     {
-        if (!empty($this->responseParams['minimumAmount']['currency'])) {
-            return $this->responseParams['minimumAmount']['currency'];
+        if (!empty($this->responseParams['maximumAmount']['currency'])) {
+            return $this->responseParams['maximumAmount']['currency'];
         }
 
         return '';
