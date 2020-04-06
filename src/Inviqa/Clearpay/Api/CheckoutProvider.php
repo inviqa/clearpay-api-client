@@ -4,6 +4,7 @@ namespace Inviqa\Clearpay\Api;
 
 use Inviqa\Clearpay\Api\Response\Checkout\Create;
 use Inviqa\Clearpay\Http\Adapter;
+use Inviqa\Clearpay\Http\Response;
 use Inviqa\Clearpay\JsonHandler;
 
 class CheckoutProvider
@@ -29,6 +30,8 @@ class CheckoutProvider
             JsonHandler::encode($params)
         );
 
-        return Create::fromHttpResponse($response);
+        return Create::fromHttpResponse(
+            Response::fromHttpResponse($response)
+        );
     }
 }
