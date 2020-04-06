@@ -5,7 +5,7 @@ namespace Contexts\Integration;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
 use Inviqa\Clearpay\Application;
-use Inviqa\Clearpay\Http\Response\ConfigurationResponse;
+use Inviqa\Clearpay\Api\Response\ConfigurationResponse;
 use PHPUnit\Framework\Assert;
 
 class GetConfigContext implements Context

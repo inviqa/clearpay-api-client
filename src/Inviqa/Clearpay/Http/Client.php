@@ -37,22 +37,9 @@ class Client implements Adapter
     /**
      * @inheritDoc
      */
-    public function get(string $uri, $options = [])
+    public function get($uri, $headers = [])
     {
-        try {
-            $response = $this->httpClient->sendRequest(
-                $this->requestFactory->createRequest(
-                    'GET',
-                    $uri,
-                    [],
-                    ''
-                )
-            );
-        } catch (\Exception $e) {
-            return HttpResponse::fromError($e->getMessage());
-        }
-
-        return HttpResponse::fromContent($response->getBody()->getContents());
+        return $this->handleRequest('GET', $uri, $headers, null);
     }
 
     /**

@@ -57,7 +57,7 @@ class ClientSpec extends ObjectBehavior
             'GET',
             '/info',
             [],
-            ''
+            null
         )->shouldHaveBeenCalled();
 
         $httpClient->sendRequest($request)->shouldHaveBeenCalled();
