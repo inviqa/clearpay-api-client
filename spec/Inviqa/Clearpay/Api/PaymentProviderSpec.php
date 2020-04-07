@@ -66,6 +66,12 @@ class PaymentProviderSpec extends ObjectBehavior
         Adapter $client,
         StreamInterface $stream
     ) {
+        $stream
+            ->getContents()
+            ->willReturn(
+                $this->fullJsonRefundResponseBody()
+            );
+
         $orderId = 'clearpay-order-id';
         $requestId = 'request-id';
         $refundAmount = '10.00';
@@ -134,5 +140,21 @@ class PaymentProviderSpec extends ObjectBehavior
   }]
 }
 JSON;
+    }
+
+    private function fullJsonRefundResponseBody()
+    {
+        return <<<JSON
+{
+  "id": "67890123",
+  "refundedAt": "2019-01-01T00:00:00.000Z",
+  "merchantReference": "merchantRefundId-1234",
+  "amount": {
+    "amount": "10.00",
+    "currency": "GBP"
+  }
+}
+JSON;
+
     }
 }

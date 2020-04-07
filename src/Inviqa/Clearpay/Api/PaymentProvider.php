@@ -3,6 +3,7 @@
 namespace Inviqa\Clearpay\Api;
 
 use Inviqa\Clearpay\Api\Response\Payment\Auth;
+use Inviqa\Clearpay\Api\Response\Payment\Refund;
 use Inviqa\Clearpay\Http\Adapter;
 use Inviqa\Clearpay\Http\HeadersTrait;
 use Inviqa\Clearpay\Http\Response;
@@ -47,10 +48,10 @@ class PaymentProvider
         string $refundAmount,
         string $refundCurrency,
         string $requestId = null,
-        string $merchantReference  = null,
+        string $merchantReference = null,
         string $refundMerchantReference = null
-    ) {
-        return $this->adapter->post(
+    ): Refund {
+        $response = $this->adapter->post(
             sprintf('payments/%s/refund', $orderId),
             $this->defaultPostHeaders(),
             JsonHandler::encode([
@@ -62,6 +63,10 @@ class PaymentProvider
                 'merchantReference'       => $merchantReference,
                 'refundMerchantReference' => $refundMerchantReference
             ])
+        );
+
+        return Refund::fromHttpResponse(
+            Response::fromHttpResponse($response)
         );
     }
 }
