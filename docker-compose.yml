@@ -7,3 +7,12 @@ services:
       - .env
     volumes:
       - ".:/app:delegated"
+
+  webserver:
+    build: docker/nginx
+    volumes:
+      - ".:/app:delegated"
+    ports:
+      - 8080:80
+    links:
+      - app:app
