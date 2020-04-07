@@ -4,20 +4,17 @@ namespace spec\Inviqa\Clearpay\Api\Response\Payment;
 
 use Inviqa\Clearpay\Api\DataModels\Payment;
 use Inviqa\Clearpay\Api\Response\Payment\Auth;
+use Inviqa\Clearpay\Http\Response;
+use Inviqa\Clearpay\JsonHandler;
 use PhpSpec\ObjectBehavior;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
 
 class AuthSpec extends ObjectBehavior
 {
-    function let(
-        ResponseInterface $response,
-        StreamInterface $stream
-    ) {
-        $stream->getContents()->willReturn(
-            $this->fullJsonResponseBody()
+    function let(Response $response)
+    {
+        $response->asDecodedJson(true)->willReturn(
+            $this->decodedJsonResponseBody()
         );
-        $response->getBody()->willReturn($stream);
 
         $this->beConstructedFromHttpResponse($response);
     }
@@ -48,9 +45,9 @@ class AuthSpec extends ObjectBehavior
         $this->paymentStateVoided()->shouldBe(false);
     }
 
-    private function fullJsonResponseBody()
+    private function decodedJsonResponseBody()
     {
-        return <<<JSON
+        $json = <<<JSON
 {
   "id" : "12345678",
   "token" : "ltqdpjhbqu3veqikk95g7p3fhvcchfvtlsiobah3u4l5nln8gii9",
@@ -80,5 +77,7 @@ class AuthSpec extends ObjectBehavior
   }]
 }
 JSON;
+
+        return JsonHandler::decode($json, true);
     }
 }

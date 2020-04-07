@@ -4,6 +4,7 @@ namespace Inviqa\Clearpay\Api;
 
 use Inviqa\Clearpay\Api\Response\Payment\Auth;
 use Inviqa\Clearpay\Http\Adapter;
+use Inviqa\Clearpay\Http\Response;
 use Inviqa\Clearpay\JsonHandler;
 
 class PaymentProvider
@@ -36,6 +37,8 @@ class PaymentProvider
             ])
         );
 
-        return Auth::fromHttpResponse($response);
+        return Auth::fromHttpResponse(
+            Response::fromHttpResponse($response)
+        );
     }
 }

@@ -3,8 +3,7 @@
 namespace Inviqa\Clearpay\Api\Response\Checkout;
 
 use Inviqa\Clearpay\DateTime;
-use Inviqa\Clearpay\JsonHandler;
-use Psr\Http\Message\ResponseInterface;
+use Inviqa\Clearpay\Http\Response;
 
 class Create
 {
@@ -38,17 +37,14 @@ class Create
         $this->redirectCheckoutUrl = $redirectCheckoutUrl;
     }
 
-    public static function fromHttpResponse(ResponseInterface $response): self
+    public static function fromHttpResponse(Response $response): self
     {
-        $data = JsonHandler::decode(
-            $response->getBody()->getContents(),
-            true
-        );
+        $state = $response->asDecodedJson(true);
 
         return new self(
-            $data['token'],
-            DateTime::fromTimeString($data['expires'])->asDateTime(),
-            $data['redirectCheckoutUrl']
+            $state['token'],
+            DateTime::fromTimeString($state['expires'])->asDateTime(),
+            $state['redirectCheckoutUrl']
         );
     }
 
