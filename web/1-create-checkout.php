@@ -6,7 +6,7 @@ $app = new \Inviqa\Clearpay\Application(config());
 
 $domain = sprintf(
     "%s://%s/",
-    'http',
+    'https',
     $_SERVER['HTTP_HOST']
 );
 
@@ -22,8 +22,8 @@ $defaults = [
         'email'       => 'name@example.com'
     ],
     'merchant' => [
-        'redirectConfirmUrl' => $domain . 'confirm.php',
-        'redirectCancelUrl'  => $domain . 'cancel.php',
+        'redirectConfirmUrl' => $domain . 'order-confirm.php',
+        'redirectCancelUrl'  => $domain . 'order-cancel.php',
     ]
 ];
 unset($domain);
@@ -38,15 +38,26 @@ try {
 ?>
 <html>
 <head>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <script type="text/javascript" src="https://portal.sandbox.clearpay.co.uk/afterpay.js"></script>
 </head>
 <body>
-<button id="clearpay-button">
-    Clearpay it!
-</button>
-<pre>
+<div class="container mx-auto mt-20">
+    <div class="md:flex md:items-center mb-6">
+        <button
+            id="clearpay-button"
+            class="shadow bg-purple-500 text-white font-bold py-2 px-4 rounded"
+            type="submit">
+            Pay with Clearpay
+        </button>
+    </div>
+    <hr>
+    Auth Params:
+    <pre>
     <?php print_r($params); ?>
-</pre>
+    </pre>
+    <div id="clearpay-success"></div>
+</div>
 <script type="text/javascript">
     document.getElementById("clearpay-button").addEventListener("click", function() {
         AfterPay.initialize({countryCode: "GB"});
@@ -55,11 +66,16 @@ try {
         // AJAX to your backend to retrieve one here. The spinning animation
         // will continue until `AfterPay.transfer` is called.
         AfterPay.onComplete = function(event) {
+            console.log(event.data);
+
             if (event.data.status == "SUCCESS") {
                 // The consumer confirmed the payment schedule.
                 // The token is now ready to be captured from your server backend.
+                alert('payment okay');
+                document.getElementById("clearpay-success").textContent = "Token: " + event.data.orderToken;
             } else {
                 // The consumer cancelled the payment or closed the popup window.
+                alert('payment failed');
             }
         }
         AfterPay.transfer({token: "<?php echo $token; ?>"});

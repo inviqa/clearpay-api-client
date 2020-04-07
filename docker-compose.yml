@@ -16,3 +16,14 @@ services:
       - 8080:80
     links:
       - app:app
+
+  ngrok:
+    image: gtriggiano/ngrok-tunnel
+    ports:
+        - "4040:4040"
+    environment:
+        NGROK_REGION: eu
+        TARGET_HOST: webserver
+        TARGET_PORT: 80
+    depends_on:
+        - webserver
