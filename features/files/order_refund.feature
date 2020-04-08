@@ -1,5 +1,13 @@
 Feature: Initiate Clearpay full / partial order refund
 
+    Scenario: Captured order can be refunded
+        Given I have Order Id "order-000" with a status of "CAPTURED"
+        And I have Request Id "req-id"
+        And I have Merchant Reference "merchant-000-refunded"
+        When I request a "10.00" refund in "GBP" for the order
+        Then I should have been refunded "10.00" in "GBP"
+
+
     Scenario: Order is not found
         Given I have Order Id "order-001"
         And I have Request Id "req-id"

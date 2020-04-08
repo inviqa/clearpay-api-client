@@ -6,6 +6,7 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\TableNode;
 use Inviqa\Clearpay\Api\Response\Payment\Auth;
+use Inviqa\Clearpay\Api\Response\Payment\Refund;
 use Inviqa\Clearpay\Application;
 use Inviqa\Clearpay\Exception\ClientErrorHttpException;
 use Inviqa\Clearpay\Exception\HttpException;
@@ -43,8 +44,10 @@ class PaymentOrderContext implements Context
      * @var string
      */
     private $clearpayErrorCode;
+    /** @var Refund */
     private $resultRefund;
     private $orderId;
+    private $orderStatus;
 
     public function __construct(string $cassettePath)
     {
@@ -59,6 +62,16 @@ class PaymentOrderContext implements Context
     public function iHaveOrderId($orderId)
     {
         $this->orderId = $orderId;
+    }
+
+
+    /**
+     * @Given I have Order Id :orderId with a status of :orderStatus
+     */
+    public function iHaveOrderIdWithAStatusOf($orderId, $orderStatus)
+    {
+        $this->orderId = $orderId;
+        $this->orderStatus = $orderStatus;
     }
 
     /**
@@ -181,6 +194,15 @@ class PaymentOrderContext implements Context
             $paymentState,
             $this->result->paymentState()
         );
+    }
+
+    /**
+     * @Then I should have been refunded :amount in :currency
+     */
+    public function iShouldHaveBeenRefundedInForOrderId($amount, $currency)
+    {
+        Assert::assertEquals($amount, $this->resultRefund->amount()->amount());
+        Assert::assertEquals($currency, $this->resultRefund->amount()->currency());
     }
 
     /**
