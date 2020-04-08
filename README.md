@@ -11,7 +11,7 @@ Copy `.env.dist` to `.env` and populate with your environment credentials.
 Optional development container.
 
 ```
-docker-compose up -d
+docker-compose up -d --build
 ```
 
 Accessing the container and running the test suite.
@@ -21,6 +21,11 @@ docker-compose run --rm -u build app bash
 composer test
 ```
 
+The Afterpay popup window can be used with the `webserver` container and tunnelled via ngrok. Use the below command to find your ngrok URL.
+
+```
+docker-compose logs -f ngrok
+```
 
 ## Usage
 
