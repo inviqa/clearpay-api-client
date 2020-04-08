@@ -51,6 +51,15 @@ try {
             Pay with Clearpay
         </button>
     </div>
+    <div class="md:flex md:items-center mb-6">
+        <a id="authorize-button"
+           class="shadow bg-purple-500 text-white font-bold py-2 px-4 rounded"
+           style="visibility: hidden;"
+           href="">
+            Authorize
+        </a>
+    </div>
+
     <hr>
     Auth Params:
     <pre>
@@ -72,7 +81,12 @@ try {
                 // The consumer confirmed the payment schedule.
                 // The token is now ready to be captured from your server backend.
                 alert('payment okay');
-                document.getElementById("clearpay-success").textContent = "Token: " + event.data.orderToken;
+                var token = event.data.orderToken,
+                    href = "3-auth-response.php?merchantRef=<?php echo $params['merchantReference']; ?>&token=" + token;
+
+                document.getElementById("clearpay-success").textContent = "Token: " + token;
+                document.getElementById("authorize-button").style.visibility = 'visible';
+                document.getElementById("authorize-button").setAttribute('href', href);
             } else {
                 // The consumer cancelled the payment or closed the popup window.
                 alert('payment failed');
