@@ -1,0 +1,151 @@
+
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/payments/order-001/refund'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            Content-Type: application/json
+            Accept: application/json
+        body: '{"requestId":"req-id","amount":{"amount":"10.00","currency":"GBP"},"merchantReference":"merchant-001-not-found","refundMerchantReference":null}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '404'
+            message: 'Not Found'
+        headers:
+            Date: 'Mon, 06 Apr 2020 14:04:13 GMT'
+            Content-Type: application/json
+            Content-Length: '139'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d224b72dd1f5391b66eece8be2902139e1586181853; expires=Wed, 06-May-20 14:04:13 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: mboxq3jic7npr62migedihy5ty
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 57fc0e877929d208-MAN
+        body: "{\n  \"errorCode\" : \"not_found\",\n  \"errorId\" : \"ffe99ea1426e0941\",\n  \"message\" : \"Afterpay payment ID not found.\",\n  \"httpStatusCode\" : 404\n}"
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/payments/order-001/refund'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            Content-Type: application/json
+            Accept: application/json
+        body: '{"requestId":"req-id","amount":{"amount":"10.00","currency":"GBP"},"merchantReference":"merchant-002-eligible","refundMerchantReference":null}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '412'
+            message: 'Precondition failed'
+        headers:
+            Date: 'Mon, 06 Apr 2020 14:04:13 GMT'
+            Content-Type: application/json
+            Content-Length: '139'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d2a9ff3b9775cd3f07be4221c8ec54e401586181853; expires=Wed, 06-May-20 14:04:13 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: cybbskh77ho6u3brkkkj6cba5e
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 57fc0e8a1c43d20c-MAN
+        body: "{\n  \"errorCode\" : \"precondition_failed\",\n  \"errorId\" : \"81b8a512d5f51118\",\n  \"message\" : \"Afterpay payment ID not found.\",\n  \"httpStatusCode\" : 412\n}"
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/payments/order-002/refund'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            Content-Type: application/json
+            Accept: application/json
+        body: '{"requestId":"req-id","amount":{"amount":"10000.00","currency":"GBP"},"merchantReference":"merchant-003-available-limit","refundMerchantReference":null}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '422'
+            message: 'Unprocessable Entity'
+        headers:
+            Date: 'Mon, 06 Apr 2020 14:07:10 GMT'
+            Content-Type: application/json
+            Content-Length: '139'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=dc53f16df4e10347c802a556b33b517651586182030; expires=Wed, 06-May-20 14:07:10 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: utl56f23djop6a4ez6ajbv5t5u
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 57fc12d86e833633-MAN
+        body: "{\n  \"errorCode\" : \"invalid_amount\",\n  \"errorId\" : \"3e4fd0226345b3dd\",\n  \"message\" : \"Afterpay payment ID not found.\",\n  \"httpStatusCode\" : 422\n}"
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/payments/order-003/refund'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            Content-Type: application/json
+            Accept: application/json
+        body: '{"requestId":"req-id","amount":{"amount":"10.00","currency":"USD"},"merchantReference":"merchant-003-currency-missmatch","refundMerchantReference":null}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '422'
+            message: 'Unprocessable Entity'
+        headers:
+            Date: 'Mon, 06 Apr 2020 14:11:02 GMT'
+            Content-Type: application/json
+            Content-Length: '139'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=dc9990f916544c72be05781fa31856f711586182262; expires=Wed, 06-May-20 14:11:02 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: kcqu66bgdytd73f57w3ppivhba
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 57fc18853b0b364b-MAN
+        body: "{\n  \"errorCode\" : \"unsupported_currency\",\n  \"errorId\" : \"f231044f2edb2d89\",\n  \"message\" : \"Afterpay payment ID not found.\",\n  \"httpStatusCode\" : 422\n}"
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/payments/order-000/refund'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            Content-Type: application/json
+            Accept: application/json
+        body: '{"requestId":"req-id","amount":{"amount":"10.00","currency":"GBP"},"merchantReference":"merchant-000-refunded","refundMerchantReference":null}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: 'Created'
+        headers:
+            Date: 'Wed, 08 Apr 2020 14:22:53 GMT'
+            Content-Type: application/json
+            Content-Length: '139'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d1cbbb232ec1d99c587a8b28bb4040d011586355773; expires=Fri, 08-May-20 14:22:53 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: fkwazhhjyo5qpjykp2xtteb5zu
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 580ca4a25e4f0091-LHR
+        body: "{\"id\":\"67890123\",\"refundedAt\":\"2019-01-01T00:00:00.000Z\",\"merchantReference\":\"merchant-000-refunded\",\"amount\":{\"amount\":\"10.00\",\"currency\":\"GBP\"}}"

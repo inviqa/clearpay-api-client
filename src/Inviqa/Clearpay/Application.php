@@ -5,6 +5,7 @@ namespace Inviqa\Clearpay;
 use Inviqa\Clearpay\Api\Response\Checkout\Create;
 use Inviqa\Clearpay\Api\Response\ConfigurationResponse;
 use Inviqa\Clearpay\Api\Response\Payment\Auth;
+use Inviqa\Clearpay\Api\Response\Payment\Refund;
 use Inviqa\Clearpay\Http\Adapter;
 use Inviqa\Clearpay\Http\Factory;
 
@@ -47,6 +48,24 @@ class Application
             $token,
             $requestId,
             $merchantReference
+        );
+    }
+
+    public function paymentRefund(
+        string $orderId,
+        string $refundAmount,
+        string $refundCurrency,
+        string $requestId = null,
+        string $merchantReference = null,
+        string $refundMerchantReference = null
+    ): Refund {
+        return (new Api\PaymentProvider($this->client))->refund(
+            $orderId,
+            $refundAmount,
+            $refundCurrency,
+            $requestId,
+            $merchantReference,
+            $refundMerchantReference
         );
     }
 }
