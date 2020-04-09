@@ -47,6 +47,10 @@ class PaymentSpec extends ObjectBehavior
 
         $this->refunds()->shouldHaveCount(1);
         $this->refunds()[0]->id()->shouldBe('67890123');
+
+        $this->events()->shouldHaveCount(1);
+        $this->events()[0]->id()->shouldBe('1OUR16OTqL3DgJ3ELlwKowU9v6K');
+        $this->events()[0]->type()->shouldBe('AUTH_APPROVED');
     }
 
     private function fullJsonHttpResponseBody()

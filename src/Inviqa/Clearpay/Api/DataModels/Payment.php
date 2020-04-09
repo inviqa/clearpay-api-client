@@ -57,6 +57,10 @@ class Payment
      * @var Collection
      */
     private $refunds;
+    /**
+     * @var Collection
+     */
+    private $events;
 
     /**
      * Payment constructor.
@@ -69,6 +73,9 @@ class Payment
      * @param \DateTimeInterface|null $createdAt
      * @param Money                   $originalAmount
      * @param Money                   $openToCaptureAmount
+     * @param OrderDetails            $orderDetails
+     * @param Collection              $refunds
+     * @param Collection              $events
      */
     private function __construct(
         string $id,
@@ -80,7 +87,8 @@ class Payment
         Money $originalAmount,
         Money $openToCaptureAmount,
         OrderDetails $orderDetails,
-        Collection $refunds
+        Collection $refunds,
+        Collection $events
     ) {
         $this->id = $id;
         $this->token = $token;
@@ -92,12 +100,17 @@ class Payment
         $this->openToCaptureAmount = $openToCaptureAmount;
         $this->orderDetails = $orderDetails;
         $this->refunds = $refunds;
+        $this->events = $events;
     }
 
     public static function fromState(array $state): self
     {
-        $refunds = Collection::make($state['refunds'])->map(function ($refund) {
+        $refunds = self::map($state['refunds'], function ($refund) {
             return Refund::fromState($refund);
+        });
+
+        $events = self::map($state['events'], function ($event) {
+            return PaymentEvent::fromState($event);
         });
 
         return new self(
@@ -110,8 +123,14 @@ class Payment
             Money::fromState($state['originalAmount']),
             Money::fromState($state['openToCaptureAmount']),
             OrderDetails::fromState($state['orderDetails']),
-            $refunds
+            $refunds,
+            $events
         );
+    }
+
+    private static function map(array $items, callable $function): Collection
+    {
+        return Collection::make($items)->map($function);
     }
 
     public function id(): string
@@ -165,5 +184,10 @@ class Payment
     public function refunds(): Collection
     {
         return $this->refunds;
+    }
+
+    public function events(): Collection
+    {
+        return $this->events;
     }
 }
