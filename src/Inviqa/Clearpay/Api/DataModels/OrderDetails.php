@@ -73,13 +73,13 @@ class OrderDetails
 
         return new self(
             Consumer::fromState($state['consumer']),
-            Contact::fromState($state['billing']),
-            Contact::fromState($state['shipping']),
-            ShippingCourier::fromState($state['courier']),
+            Contact::fromState($state['billing'] ?? []),
+            Contact::fromState($state['shipping'] ?? []),
+            ShippingCourier::fromState($state['courier'] ?? []),
             $items,
             $discounts,
-            Money::fromState($state['taxAmount']),
-            Money::fromState($state['shippingAmount'])
+            Money::fromState($state['taxAmount'] ?? []),
+            Money::fromState($state['shippingAmount'] ?? [])
         );
     }
 
