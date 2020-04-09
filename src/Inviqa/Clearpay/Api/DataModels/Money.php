@@ -19,9 +19,12 @@ class Money
         $this->currency = $currency;
     }
 
-    public static function fromState(array $state): self
+    public static function fromState(array $state = []): self
     {
-        return new self($state['amount'], $state['currency']);
+        return new self(
+            $state['amount'] ?? '',
+            $state['currency'] ?? ''
+        );
     }
 
     public function amount(): string
