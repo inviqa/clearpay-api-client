@@ -55,7 +55,7 @@ class PaymentEvent
         return new self(
             $state['id'],
             DateTime::fromTimeString($state['created'])->asDateTime(),
-            DateTime::fromTimeString($state['expires'])->asDateTime(),
+            DateTime::fromTimeString($state['expires'] ?? '')->asDateTime(),
             $state['type'],
             Money::fromState($state['amount'])
         );
