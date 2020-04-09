@@ -48,7 +48,7 @@ class Refund
         return new self(
             $state['id'],
             DateTime::fromTimeString($state['refundedAt'])->asDateTime(),
-            $state['merchantReference'],
+            $state['merchantReference'] ?? '',
             Money::fromState($state['amount'])
         );
     }

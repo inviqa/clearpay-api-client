@@ -10,7 +10,41 @@ class RefundSpec extends ObjectBehavior
 {
     function let()
     {
-        $json = <<<JSON
+        $this->beConstructedFromState(
+            JsonHandler::decode($this->fullJsonState(), true)
+        );
+    }
+
+    function it_is_initializable()
+    {
+        $this->shouldHaveType(Refund::class);
+    }
+
+    function it_has_full_properties()
+    {
+        $this->id()->shouldBe('67890123');
+        $this->refundedAt()->format('Y-m-d H:i:s')->shouldBe('2019-01-01 00:00:00');
+        $this->merchantReference()->shouldBe('merchantRefundId-1234');
+        $this->amount()->amount()->shouldBe('10.00');
+        $this->amount()->currency()->shouldBe('GBP');
+    }
+
+    function it_has_minimal_properties()
+    {
+        $this->beConstructedFromState(
+            JsonHandler::decode($this->minimumJsonState(), true)
+        );
+
+        $this->id()->shouldBe('67890123');
+        $this->refundedAt()->format('Y-m-d H:i:s')->shouldBe('2019-01-01 00:00:00');
+        $this->merchantReference()->shouldBe('');
+        $this->amount()->amount()->shouldBe('10.00');
+        $this->amount()->currency()->shouldBe('GBP');
+    }
+
+    private function fullJsonState()
+    {
+        return <<<JSON
 {
   "id": "67890123",
   "refundedAt": "2019-01-01T00:00:00.000Z",
@@ -21,21 +55,20 @@ class RefundSpec extends ObjectBehavior
   }
 }
 JSON;
-        $this->beConstructedFromState(JsonHandler::decode($json, true));
-
     }
 
-    function it_is_initializable()
+    private function minimumJsonState()
     {
-        $this->shouldHaveType(Refund::class);
+        return <<<JSON
+{
+  "id": "67890123",
+  "refundedAt": "2019-01-01T00:00:00.000Z",
+  "amount": {
+    "amount": "10.00",
+    "currency": "GBP"
+  }
+}
+JSON;
     }
 
-    function it_has_properties()
-    {
-        $this->id()->shouldBe('67890123');
-        $this->refundedAt()->format('Y-m-d H:i:s')->shouldBe('2019-01-01 00:00:00');
-        $this->merchantReference()->shouldBe('merchantRefundId-1234');
-        $this->amount()->amount()->shouldBe('10.00');
-        $this->amount()->currency()->shouldBe('GBP');
-    }
 }
