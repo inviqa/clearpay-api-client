@@ -88,7 +88,7 @@
             Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
             Server: cloudflare
             CF-RAY: 57d395798d89346e-LHR
-        body: "{\"id\":\"12345678\",\"token\":\"003.plo9306h9kntg5bd6rhjgj7rua2qh718dphvkckg7gd54f72\",\"status\":\"APPROVED\",\"created\":\"2019-01-01T00:00:00.000Z\",\"originalAmount\":{\"amount\":\"100.00\",\"currency\":\"GBP\"},\"openToCaptureAmount\":{\"amount\":\"100.00\",\"currency\":\"GBP\"},\"paymentState\":\"AUTH_APPROVED\",\"merchantReference\":\"merchantOrderId-1234\",\"refunds\":[],\"orderDetails\":{},\"events\":[{\"id\":\"1OUR16OTqL3DgJ3ELlwKowU9v6K\",\"created\":\"2019-01-01T00:00:00.000Z\",\"expires\":\"2019-01-01T00:00:00.000Z\",\"type\":\"AUTH_APPROVED\",\"amount\":{\"amount\":\"100.00\",\"currency\":\"GBP\"}}]}"
+        body: "{\"id\":\"12345678\",\"token\":\"003.plo9306h9kntg5bd6rhjgj7rua2qh718dphvkckg7gd54f72\",\"status\":\"APPROVED\",\"created\":\"2019-01-01T00:00:00.000Z\",\"originalAmount\":{\"amount\":\"100.00\",\"currency\":\"GBP\"},\"openToCaptureAmount\":{\"amount\":\"100.00\",\"currency\":\"GBP\"},\"paymentState\":\"AUTH_APPROVED\",\"merchantReference\":\"merchantOrderId-1234\",\"refunds\":[],\"orderDetails\":{\"consumer\":{\"phoneNumber\":\"07000000000\",\"givenNames\":\"Joe\",\"surname\":\"Consumer\",\"email\":\"test@example.com\"}},\"events\":[{\"id\":\"1OUR16OTqL3DgJ3ELlwKowU9v6K\",\"created\":\"2019-01-01T00:00:00.000Z\",\"expires\":\"2019-01-01T00:00:00.000Z\",\"type\":\"AUTH_APPROVED\",\"amount\":{\"amount\":\"100.00\",\"currency\":\"GBP\"}}]}"
 -
     request:
         method: POST

@@ -5,14 +5,12 @@ namespace Contexts\Integration;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\TableNode;
-use Inviqa\Clearpay\Api\Response\Payment\Auth;
+use Inviqa\Clearpay\Api\Response\Payment\Payment;
 use Inviqa\Clearpay\Api\Response\Payment\Refund;
 use Inviqa\Clearpay\Application;
-use Inviqa\Clearpay\Exception\ClientErrorHttpException;
 use Inviqa\Clearpay\Exception\HttpException;
 use PHPUnit\Framework\Assert;
 use Services\HttpMockConfig;
-use Services\TestConfig;
 
 class PaymentOrderContext implements Context
 {
@@ -37,9 +35,9 @@ class PaymentOrderContext implements Context
      */
     private $merchantRef= null;
     /**
-     * @var Auth
+     * @var Payment
      */
-    private $result;
+    private $resultPaymentAuth;
     /**
      * @var string
      */
@@ -83,7 +81,7 @@ class PaymentOrderContext implements Context
     }
 
     /**
-     * @Given I have Merchant Reference :merchantRef
+     * @Given I have merchant reference :merchantRef
      */
     public function iHaveMerchantReference($merchantRef)
     {
@@ -162,7 +160,7 @@ class PaymentOrderContext implements Context
     {
         try {
             $this->httpRecorder->insertCassette('payment_auth.yml');
-            $this->result = $this->application->paymentAuth(
+            $this->resultPaymentAuth = $this->application->paymentAuth(
                 $this->token,
                 $this->requestId,
                 $this->merchantRef
@@ -181,7 +179,7 @@ class PaymentOrderContext implements Context
     {
         Assert::assertEquals(
             $paymentStatus,
-            $this->result->status()
+            $this->resultPaymentAuth->status()
         );
     }
 
@@ -192,7 +190,7 @@ class PaymentOrderContext implements Context
     {
         Assert::assertEquals(
             $paymentState,
-            $this->result->paymentState()
+            $this->resultPaymentAuth->paymentState()
         );
     }
 
