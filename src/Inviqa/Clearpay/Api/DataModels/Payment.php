@@ -48,6 +48,10 @@ class Payment
      * @var Money
      */
     private $openToCaptureAmount;
+    /**
+     * @var OrderDetails
+     */
+    private $orderDetails;
 
     /**
      * Payment constructor.
@@ -69,7 +73,8 @@ class Payment
         string $merchantReference,
         $createdAt,
         Money $originalAmount,
-        Money $openToCaptureAmount
+        Money $openToCaptureAmount,
+        OrderDetails $orderDetails
     ) {
         $this->id = $id;
         $this->token = $token;
@@ -79,6 +84,7 @@ class Payment
         $this->createdAt = $createdAt;
         $this->originalAmount = $originalAmount;
         $this->openToCaptureAmount = $openToCaptureAmount;
+        $this->orderDetails = $orderDetails;
     }
 
     public static function fromState(array $state): self
@@ -91,7 +97,8 @@ class Payment
             $state['merchantReference'],
             DateTime::fromTimeString($state['created'])->asDateTime(),
             Money::fromState($state['originalAmount']),
-            Money::fromState($state['openToCaptureAmount'])
+            Money::fromState($state['openToCaptureAmount']),
+            OrderDetails::fromState($state['orderDetails'])
         );
     }
 
@@ -136,5 +143,10 @@ class Payment
     public function openToCaptureAmount(): Money
     {
         return $this->openToCaptureAmount;
+    }
+
+    public function orderDetails(): OrderDetails
+    {
+        return $this->orderDetails;
     }
 }
