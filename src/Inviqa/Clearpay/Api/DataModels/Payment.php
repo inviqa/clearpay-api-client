@@ -2,6 +2,7 @@
 
 namespace Inviqa\Clearpay\Api\DataModels;
 
+use Inviqa\Clearpay\Collection;
 use Inviqa\Clearpay\DateTime;
 
 class Payment
@@ -52,6 +53,10 @@ class Payment
      * @var OrderDetails
      */
     private $orderDetails;
+    /**
+     * @var Collection
+     */
+    private $refunds;
 
     /**
      * Payment constructor.
@@ -74,7 +79,8 @@ class Payment
         $createdAt,
         Money $originalAmount,
         Money $openToCaptureAmount,
-        OrderDetails $orderDetails
+        OrderDetails $orderDetails,
+        Collection $refunds
     ) {
         $this->id = $id;
         $this->token = $token;
@@ -85,10 +91,15 @@ class Payment
         $this->originalAmount = $originalAmount;
         $this->openToCaptureAmount = $openToCaptureAmount;
         $this->orderDetails = $orderDetails;
+        $this->refunds = $refunds;
     }
 
     public static function fromState(array $state): self
     {
+        $refunds = Collection::make($state['refunds'])->map(function ($refund) {
+            return Refund::fromState($refund);
+        });
+
         return new self(
             $state['id'],
             $state['token'],
@@ -98,7 +109,8 @@ class Payment
             DateTime::fromTimeString($state['created'])->asDateTime(),
             Money::fromState($state['originalAmount']),
             Money::fromState($state['openToCaptureAmount']),
-            OrderDetails::fromState($state['orderDetails'])
+            OrderDetails::fromState($state['orderDetails']),
+            $refunds
         );
     }
 
@@ -148,5 +160,10 @@ class Payment
     public function orderDetails(): OrderDetails
     {
         return $this->orderDetails;
+    }
+
+    public function refunds(): Collection
+    {
+        return $this->refunds;
     }
 }

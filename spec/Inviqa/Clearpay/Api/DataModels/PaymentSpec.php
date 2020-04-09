@@ -44,6 +44,9 @@ class PaymentSpec extends ObjectBehavior
         $this->orderDetails()->consumer()->givenNames()->shouldBe('Joe');
         $this->orderDetails()->consumer()->surname()->shouldBe('Consumer');
         $this->orderDetails()->items()->shouldHaveCount(2);
+
+        $this->refunds()->shouldHaveCount(1);
+        $this->refunds()[0]->id()->shouldBe('67890123');
     }
 
     private function fullJsonHttpResponseBody()
