@@ -36,7 +36,7 @@ class PaymentProviderSpec extends ObjectBehavior
         Adapter $client,
         StreamInterface $stream
     ) {
-        $stream->getContents()->willReturn($this->fullJsonAuthResponseBody());
+        $stream->getContents()->willReturn($this->fullJsonPaymentResponseBody());
 
         $requestId = uniqid();
         $token = 'TOKEN';
@@ -54,6 +54,52 @@ class PaymentProviderSpec extends ObjectBehavior
 
         $client->post(
             'payments/auth',
+            [
+                'Content-Type' => 'application/json',
+                'Accept'       => 'application/json'
+            ],
+            $expectedJson
+        )->shouldHaveBeenCalled();
+    }
+
+    function it_can_make_a_capture_request(
+        Adapter $client,
+        StreamInterface $stream
+    ) {
+        $stream
+            ->getContents()
+            ->willReturn(
+                $this->fullJsonPaymentResponseBody()
+            );
+
+        $orderId = 'clearpay-order-id';
+        $requestId = 'request-id';
+        $captureAmount = '10.00';
+        $captureCurrency = 'GBP';
+        $merchantReference = 'merchant-order-ref';
+        $paymentEventMerchantReference = 'merchant-payment-ref';
+
+        $this->capture(
+            $orderId,
+            $captureAmount,
+            $captureCurrency,
+            $requestId,
+            $merchantReference,
+            $paymentEventMerchantReference
+        );
+
+        $expectedJson = json_encode([
+            'requestId'                     => $requestId,
+            'amount'                        => [
+                'amount'   => $captureAmount,
+                'currency' => $captureCurrency
+            ],
+            'merchantReference'             => $merchantReference,
+            'paymentEventMerchantReference' => $paymentEventMerchantReference
+        ]);
+
+        $client->post(
+            'payments/' . $orderId . '/capture',
             [
                 'Content-Type' => 'application/json',
                 'Accept'       => 'application/json'
@@ -108,7 +154,7 @@ class PaymentProviderSpec extends ObjectBehavior
         )->shouldHaveBeenCalled();
     }
 
-    private function fullJsonAuthResponseBody()
+    private function fullJsonPaymentResponseBody()
     {
         return <<<JSON
 {

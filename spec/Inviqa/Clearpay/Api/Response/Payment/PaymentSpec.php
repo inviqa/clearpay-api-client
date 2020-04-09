@@ -2,13 +2,13 @@
 
 namespace spec\Inviqa\Clearpay\Api\Response\Payment;
 
-use Inviqa\Clearpay\Api\DataModels\Payment;
-use Inviqa\Clearpay\Api\Response\Payment\Auth;
+use Inviqa\Clearpay\Api\DataModels\Payment as PaymentDataModel;
+use Inviqa\Clearpay\Api\Response\Payment\Payment;
 use Inviqa\Clearpay\Http\Response;
 use Inviqa\Clearpay\JsonHandler;
 use PhpSpec\ObjectBehavior;
 
-class AuthSpec extends ObjectBehavior
+class PaymentSpec extends ObjectBehavior
 {
     function let(Response $response)
     {
@@ -21,12 +21,12 @@ class AuthSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType(Auth::class);
+        $this->shouldHaveType(Payment::class);
     }
 
     function it_has_properties()
     {
-        $this->payment()->shouldBeAnInstanceOf(Payment::class);
+        $this->payment()->shouldBeAnInstanceOf(PaymentDataModel::class);
 
         $this->id()->shouldBe('12345678');
         $this->token()->shouldBe('ltqdpjhbqu3veqikk95g7p3fhvcchfvtlsiobah3u4l5nln8gii9');

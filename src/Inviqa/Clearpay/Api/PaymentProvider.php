@@ -2,7 +2,7 @@
 
 namespace Inviqa\Clearpay\Api;
 
-use Inviqa\Clearpay\Api\Response\Payment\Auth;
+use Inviqa\Clearpay\Api\Response\Payment\Payment;
 use Inviqa\Clearpay\Api\Response\Payment\Refund;
 use Inviqa\Clearpay\Http\Adapter;
 use Inviqa\Clearpay\Http\HeadersTrait;
@@ -27,19 +27,46 @@ class PaymentProvider
         string $token,
         string $requestId = null,
         string $merchantReference = null
-    ): Auth {
+    ): Payment {
         $response = $this->adapter->post(
             'payments/auth',
             $this->defaultPostHeaders(),
             JsonHandler::encode([
-                'requestId' => $requestId,
-                'token' => $token,
+                'requestId'         => $requestId,
+                'token'             => $token,
                 'merchantReference' => $merchantReference
             ])
         );
 
-        return Auth::fromHttpResponse(
+        return Payment::fromHttpResponse(
             Response::fromHttpResponse($response)
+        );
+    }
+
+    public function capture(
+        string $orderId,
+        string $captureAmount,
+        string $captureCurrency,
+        string $requestId = null,
+        string $merchantReference = null,
+        string $paymentEventMerchantReference = null
+    ): Payment {
+        $result = $this->adapter->post(
+            sprintf("payments/%s/capture", $orderId),
+            $this->defaultPostHeaders(),
+            JsonHandler::encode([
+                'requestId'                     => $requestId,
+                'amount'                        => [
+                    'amount'   => $captureAmount,
+                    'currency' => $captureCurrency
+                ],
+                'merchantReference'             => $merchantReference,
+                'paymentEventMerchantReference' => $paymentEventMerchantReference
+            ])
+        );
+
+        return Payment::fromHttpResponse(
+            Response::fromHttpResponse($result)
         );
     }
 
