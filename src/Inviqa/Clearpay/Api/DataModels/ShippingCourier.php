@@ -43,10 +43,10 @@ class ShippingCourier
         $this->priority = $priority;
     }
 
-    public static function fromState(array $state): self
+    public static function fromState(array $state = []): self
     {
         return new self(
-            DateTime::fromTimeString($state['shippedAt'])->asDateTime(),
+            DateTime::fromTimeString($state['shippedAt'] ?? '')->asDateTime(),
             $state['name'] ?? '',
             $state['tracking'] ?? '',
             $state['priority'] ?? ''
