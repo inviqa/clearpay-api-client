@@ -62,6 +62,8 @@ class Payment
      */
     private $events;
 
+    use CommonTrait;
+
     /**
      * Payment constructor.
      *
@@ -126,11 +128,6 @@ class Payment
             $refunds,
             $events
         );
-    }
-
-    private static function map(array $items, callable $function): Collection
-    {
-        return Collection::make($items)->map($function);
     }
 
     public function id(): string
