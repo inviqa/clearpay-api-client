@@ -33,18 +33,22 @@ class PaymentOrderContext implements Context
     /**
      * @var null|string
      */
-    private $merchantRef= null;
-    /**
-     * @var Payment
-     */
-    private $resultPaymentAuth;
+    private $merchantRef = null;
     /**
      * @var string
      */
     private $clearpayErrorCode;
     /** @var Refund */
     private $resultRefund;
+    /** @var Payment */
+    private $resultPayment;
+    /**
+     * @var string
+     */
     private $orderId;
+    /**
+     * @var string
+     */
     private $orderStatus;
 
     public function __construct(string $cassettePath)
@@ -62,6 +66,13 @@ class PaymentOrderContext implements Context
         $this->orderId = $orderId;
     }
 
+    /**
+     * @Given I have checkout token :token
+     */
+    public function iHaveCheckoutToken(string $token = '')
+    {
+        $this->token = $token;
+    }
 
     /**
      * @Given I have Order Id :orderId with a status of :orderStatus
@@ -146,11 +157,22 @@ class PaymentOrderContext implements Context
     }
 
     /**
-     * @Given I have checkout token :token
+     * @When I capture :amount in :currency for the order
      */
-    public function iHaveCheckoutToken(string $token = '')
+    public function iCaptureTheOrderFunds($amount, $currency)
     {
-        $this->token = $token;
+        try {
+            $this->httpRecorder->insertCassette('payment_capture.yml');
+            $this->resultPayment = $this->application->paymentCapture(
+                $this->orderId,
+                $amount,
+                $currency
+            );
+            $this->httpRecorder->eject();
+        }
+        catch (HttpException $e) {
+            $this->clearpayErrorCode = $e->clearpayErrorCode();
+        }
     }
 
     /**
@@ -160,7 +182,7 @@ class PaymentOrderContext implements Context
     {
         try {
             $this->httpRecorder->insertCassette('payment_auth.yml');
-            $this->resultPaymentAuth = $this->application->paymentAuth(
+            $this->resultPayment = $this->application->paymentAuth(
                 $this->token,
                 $this->requestId,
                 $this->merchantRef
@@ -179,7 +201,7 @@ class PaymentOrderContext implements Context
     {
         Assert::assertEquals(
             $paymentStatus,
-            $this->resultPaymentAuth->status()
+            $this->resultPayment->status()
         );
     }
 
@@ -190,7 +212,7 @@ class PaymentOrderContext implements Context
     {
         Assert::assertEquals(
             $paymentState,
-            $this->resultPaymentAuth->paymentState()
+            $this->resultPayment->paymentState()
         );
     }
 

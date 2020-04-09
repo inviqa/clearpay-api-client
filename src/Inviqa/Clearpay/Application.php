@@ -2,6 +2,7 @@
 
 namespace Inviqa\Clearpay;
 
+use Inviqa\Clearpay\Api\PaymentProvider;
 use Inviqa\Clearpay\Api\Response\Checkout\Create;
 use Inviqa\Clearpay\Api\Response\ConfigurationResponse;
 use Inviqa\Clearpay\Api\Response\Payment\Payment;
@@ -48,6 +49,24 @@ class Application
             $token,
             $requestId,
             $merchantReference
+        );
+    }
+
+    public function paymentCapture(
+        string $orderId,
+        string $captureAmount,
+        string $captureCurrency,
+        string $requestId = null,
+        string $merchantReference = null,
+        string $paymentEventMerchantReference = null
+    ): Payment {
+        return (new Api\PaymentProvider($this->client))->capture(
+            $orderId,
+            $captureAmount,
+            $captureCurrency,
+            $requestId,
+            $merchantReference,
+            $paymentEventMerchantReference
         );
     }
 
