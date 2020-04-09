@@ -63,17 +63,17 @@ class Contact
         $this->phoneNumber = $phoneNumber;
     }
 
-    public static function fromState(array $state): self
+    public static function fromState(array $state = []): self
     {
         return new self(
-            $state['name'],
-            $state['line1'],
+            $state['name'] ?? '',
+            $state['line1'] ?? '',
             $state['line2'] ?? '',
             $state['area1'] ?? '',
             $state['area2'] ?? '',
-            $state['region'],
-            $state['postcode'],
-            $state['countryCode'],
+            $state['region'] ?? '',
+            $state['postcode'] ?? '',
+            $state['countryCode'] ?? '',
             $state['phoneNumber'] ?? ''
         );
     }

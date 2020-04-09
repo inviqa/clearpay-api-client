@@ -54,6 +54,21 @@ class ContactSpec extends ObjectBehavior
         $this->phoneNumber()->shouldBe('07000000000');
     }
 
+    function it_has_empty_properties_for_order_detail_billing_contact()
+    {
+        $this->beConstructedFromState([]);
+
+        $this->name()->shouldBe('');
+        $this->line1()->shouldBe('');
+        $this->line2()->shouldBe('');
+        $this->area1()->shouldBe('');
+        $this->area2()->shouldBe('');
+        $this->region()->shouldBe('');
+        $this->postcode()->shouldBe('');
+        $this->countryCode()->shouldBe('');
+        $this->phoneNumber()->shouldBe('');
+    }
+
     private function fullContactState()
     {
         return [
