@@ -49,32 +49,41 @@ class PaymentSpec extends ObjectBehavior
     {
         $json = <<<JSON
 {
-  "id" : "12345678",
-  "token" : "ltqdpjhbqu3veqikk95g7p3fhvcchfvtlsiobah3u4l5nln8gii9",
-  "status" : "APPROVED",
-  "created" : "2019-01-01T00:00:00.000Z",
-  "originalAmount" : {
-    "amount" : "100.00",
-    "currency" : "GBP"
-  },
-  "openToCaptureAmount" : {
-    "amount" : "100.00",
-    "currency" : "GBP"
-  },
-  "paymentState" : "AUTH_APPROVED",
-  "merchantReference" : "merchantOrderId-1234",
-  "refunds" : [],
-  "orderDetails" : {},
-  "events" : [{
-    "id" : "1OUR16OTqL3DgJ3ELlwKowU9v6K",
-    "created" : "2019-01-01T00:00:00.000Z",
-    "expires" : "2019-01-01T00:00:00.000Z",
-    "type" : "AUTH_APPROVED",
-    "amount" : {
-      "amount" : "100.00",
-      "currency" : "GBP"
-    }
-  }]
+    "id": "12345678",
+    "token": "ltqdpjhbqu3veqikk95g7p3fhvcchfvtlsiobah3u4l5nln8gii9",
+    "status": "APPROVED",
+    "created": "2019-01-01T00:00:00.000Z",
+    "originalAmount": {
+        "amount": "100.00",
+        "currency": "GBP"
+    },
+    "openToCaptureAmount": {
+        "amount": "100.00",
+        "currency": "GBP"
+    },
+    "paymentState": "AUTH_APPROVED",
+    "merchantReference": "merchantOrderId-1234",
+    "refunds": [],
+    "orderDetails": {
+        "consumer": {
+            "phoneNumber": "07000000000",
+            "givenNames": "Joe",
+            "surname": "Consumer",
+            "email": "test@example.com"
+        }
+    },
+    "events": [
+        {
+            "id": "1OUR16OTqL3DgJ3ELlwKowU9v6K",
+            "created": "2019-01-01T00:00:00.000Z",
+            "expires": "2019-01-01T00:00:00.000Z",
+            "type": "AUTH_APPROVED",
+            "amount": {
+                "amount": "100.00",
+                "currency": "GBP"
+            }
+        }
+    ]
 }
 JSON;
 
