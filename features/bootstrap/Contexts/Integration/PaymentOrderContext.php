@@ -38,9 +38,13 @@ class PaymentOrderContext implements Context
      * @var string
      */
     private $clearpayErrorCode;
-    /** @var Refund */
+    /**
+     * @var Refund
+     */
     private $resultRefund;
-    /** @var Payment */
+    /**
+     * @var Payment
+     */
     private $resultPayment;
     /**
      * @var string
