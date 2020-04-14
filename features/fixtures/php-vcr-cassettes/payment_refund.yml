@@ -7,7 +7,7 @@
             Host: api.eu-sandbox.afterpay.com
             Expect: null
             Accept-Encoding: null
-            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            User-Agent: 'inviqa-clearpay-api-client (PHP/7.2.27; curl/7.52.1) integration-test'
             Content-Type: application/json
             Accept: application/json
         body: '{"requestId":"req-id","amount":{"amount":"10.00","currency":"GBP"},"merchantReference":"merchant-001-not-found","refundMerchantReference":null}'
@@ -37,7 +37,7 @@
             Host: api.eu-sandbox.afterpay.com
             Expect: null
             Accept-Encoding: null
-            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            User-Agent: 'inviqa-clearpay-api-client (PHP/7.2.27; curl/7.52.1) integration-test'
             Content-Type: application/json
             Accept: application/json
         body: '{"requestId":"req-id","amount":{"amount":"10.00","currency":"GBP"},"merchantReference":"merchant-002-eligible","refundMerchantReference":null}'
@@ -67,7 +67,7 @@
             Host: api.eu-sandbox.afterpay.com
             Expect: null
             Accept-Encoding: null
-            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            User-Agent: 'inviqa-clearpay-api-client (PHP/7.2.27; curl/7.52.1) integration-test'
             Content-Type: application/json
             Accept: application/json
         body: '{"requestId":"req-id","amount":{"amount":"10000.00","currency":"GBP"},"merchantReference":"merchant-003-available-limit","refundMerchantReference":null}'
@@ -97,7 +97,7 @@
             Host: api.eu-sandbox.afterpay.com
             Expect: null
             Accept-Encoding: null
-            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            User-Agent: 'inviqa-clearpay-api-client (PHP/7.2.27; curl/7.52.1) integration-test'
             Content-Type: application/json
             Accept: application/json
         body: '{"requestId":"req-id","amount":{"amount":"10.00","currency":"USD"},"merchantReference":"merchant-003-currency-missmatch","refundMerchantReference":null}'
@@ -127,7 +127,7 @@
             Host: api.eu-sandbox.afterpay.com
             Expect: null
             Accept-Encoding: null
-            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            User-Agent: 'inviqa-clearpay-api-client (PHP/7.2.27; curl/7.52.1) integration-test'
             Content-Type: application/json
             Accept: application/json
         body: '{"requestId":"req-id","amount":{"amount":"10.00","currency":"GBP"},"merchantReference":"merchant-000-refunded","refundMerchantReference":null}'
