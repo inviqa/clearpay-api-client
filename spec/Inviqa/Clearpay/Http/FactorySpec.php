@@ -14,6 +14,7 @@ class FactorySpec extends ObjectBehavior
         $config->uri()->willReturn('https://api.eu-sandbox.afterpay.com/v2/');
         $config->username()->willReturn('api-user');
         $config->password()->willReturn('PassW0rd');
+        $config->userAgent()->willReturn('phpspec');
     }
 
     function it_is_initializable()
@@ -28,5 +29,6 @@ class FactorySpec extends ObjectBehavior
         $config->uri()->shouldHaveBeenCalled();
         $config->username()->shouldHaveBeenCalled();
         $config->password()->shouldHaveBeenCalled();
+        $config->userAgent()->shouldHaveBeenCalled();
     }
 }

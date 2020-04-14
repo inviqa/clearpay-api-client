@@ -19,6 +19,9 @@ class Factory
                         $config->username(),
                         $config->password()
                     ],
+                    'headers'     => [
+                        'User-Agent' => $config->userAgent()
+                    ],
                     'http_errors' => false
                 ])
             ),
