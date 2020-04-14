@@ -20,4 +20,18 @@ class TestConfig implements Config
     {
         return getenv('CLEARPAY_PASSWORD');
     }
+
+    public function userAgent(): string
+    {
+        $curl = 'curl-not-available';
+        if (extension_loaded('curl') && function_exists('curl_version')) {
+            $curl = 'curl/' . curl_version()['version'];
+        }
+
+        return sprintf(
+            'inviqa-clearpay-api-client (%s; %s) integration-test',
+            'PHP/' . PHP_VERSION,
+            $curl
+        );
+    }
 }

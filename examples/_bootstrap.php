@@ -20,5 +20,13 @@ function config()
         {
             return getenv('CLEARPAY_PASSWORD');
         }
+
+        public function userAgent(): string
+        {
+            return sprintf(
+                'inviqa-clearpay-api-client (%s) examples',
+                'PHP/' . PHP_VERSION
+            );
+        }
     };
 }
