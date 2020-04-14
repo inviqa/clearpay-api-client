@@ -25,4 +25,12 @@ class MoneySpec extends ObjectBehavior
         $this->amount()->shouldBe('29.99');
         $this->currency()->shouldBe('GBP');
     }
+
+    function it_has_empty_values_from_order_detail()
+    {
+        $this->beConstructedFromState([]);
+
+        $this->amount()->shouldBe('');
+        $this->currency()->shouldBe('');
+    }
 }

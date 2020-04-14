@@ -41,4 +41,14 @@ class ShippingCourierSpec extends ObjectBehavior
         $this->tracking()->shouldBe('');
         $this->priority()->shouldBe('');
     }
+
+    function it_has_empty_properties_from_order_deatils()
+    {
+        $this->beConstructedFromState([]);
+
+        $this->shippedAt()->shouldBe(null);
+        $this->name()->shouldBe('');
+        $this->tracking()->shouldBe('');
+        $this->priority()->shouldBe('');
+    }
 }

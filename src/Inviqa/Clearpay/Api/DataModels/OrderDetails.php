@@ -39,6 +39,8 @@ class OrderDetails
      */
     private $shippingAmount;
 
+    use CommonTrait;
+
     private function __construct(
         Consumer $consumer,
         Contact $billing,
@@ -61,30 +63,24 @@ class OrderDetails
 
     public static function fromState(array $state): self
     {
-        return new self(
-            Consumer::fromState($state['consumer']),
-            Contact::fromState($state['billing']),
-            Contact::fromState($state['shipping']),
-            ShippingCourier::fromState($state['courier']),
-            self::mapItems($state['items'] ?? []),
-            self::mapDiscounts($state['discounts'] ?? []),
-            Money::fromState($state['taxAmount']),
-            Money::fromState($state['shippingAmount'])
-        );
-    }
-
-    private static function mapItems(array $items): Collection
-    {
-        return Collection::make($items)->map(function ($item) {
+        $items = self::map($state['items'] ?? [], function ($item) {
             return Item::fromState($item);
         });
-    }
 
-    private static function mapDiscounts(array $discounts): Collection
-    {
-        return Collection::make($discounts)->map(function ($discount) {
+        $discounts = self::map($state['discounts'] ?? [], function ($discount) {
             return Discount::fromState($discount);
         });
+
+        return new self(
+            Consumer::fromState($state['consumer']),
+            Contact::fromState($state['billing'] ?? []),
+            Contact::fromState($state['shipping'] ?? []),
+            ShippingCourier::fromState($state['courier'] ?? []),
+            $items,
+            $discounts,
+            Money::fromState($state['taxAmount'] ?? []),
+            Money::fromState($state['shippingAmount'] ?? [])
+        );
     }
 
     public function consumer(): Consumer

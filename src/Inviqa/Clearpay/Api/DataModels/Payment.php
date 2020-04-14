@@ -2,6 +2,7 @@
 
 namespace Inviqa\Clearpay\Api\DataModels;
 
+use Inviqa\Clearpay\Collection;
 use Inviqa\Clearpay\DateTime;
 
 class Payment
@@ -48,6 +49,20 @@ class Payment
      * @var Money
      */
     private $openToCaptureAmount;
+    /**
+     * @var OrderDetails
+     */
+    private $orderDetails;
+    /**
+     * @var Collection
+     */
+    private $refunds;
+    /**
+     * @var Collection
+     */
+    private $events;
+
+    use CommonTrait;
 
     /**
      * Payment constructor.
@@ -60,6 +75,9 @@ class Payment
      * @param \DateTimeInterface|null $createdAt
      * @param Money                   $originalAmount
      * @param Money                   $openToCaptureAmount
+     * @param OrderDetails            $orderDetails
+     * @param Collection              $refunds
+     * @param Collection              $events
      */
     private function __construct(
         string $id,
@@ -69,7 +87,10 @@ class Payment
         string $merchantReference,
         $createdAt,
         Money $originalAmount,
-        Money $openToCaptureAmount
+        Money $openToCaptureAmount,
+        OrderDetails $orderDetails,
+        Collection $refunds,
+        Collection $events
     ) {
         $this->id = $id;
         $this->token = $token;
@@ -79,10 +100,21 @@ class Payment
         $this->createdAt = $createdAt;
         $this->originalAmount = $originalAmount;
         $this->openToCaptureAmount = $openToCaptureAmount;
+        $this->orderDetails = $orderDetails;
+        $this->refunds = $refunds;
+        $this->events = $events;
     }
 
     public static function fromState(array $state): self
     {
+        $refunds = self::map($state['refunds'], function ($refund) {
+            return Refund::fromState($refund);
+        });
+
+        $events = self::map($state['events'], function ($event) {
+            return PaymentEvent::fromState($event);
+        });
+
         return new self(
             $state['id'],
             $state['token'],
@@ -91,7 +123,10 @@ class Payment
             $state['merchantReference'],
             DateTime::fromTimeString($state['created'])->asDateTime(),
             Money::fromState($state['originalAmount']),
-            Money::fromState($state['openToCaptureAmount'])
+            Money::fromState($state['openToCaptureAmount']),
+            OrderDetails::fromState($state['orderDetails']),
+            $refunds,
+            $events
         );
     }
 
@@ -136,5 +171,20 @@ class Payment
     public function openToCaptureAmount(): Money
     {
         return $this->openToCaptureAmount;
+    }
+
+    public function orderDetails(): OrderDetails
+    {
+        return $this->orderDetails;
+    }
+
+    public function refunds(): Collection
+    {
+        return $this->refunds;
+    }
+
+    public function events(): Collection
+    {
+        return $this->events;
     }
 }

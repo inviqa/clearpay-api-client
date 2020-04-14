@@ -28,9 +28,37 @@ class OrderDetailsSpec extends ObjectBehavior
     function it_has_data_models()
     {
         $this->consumer()->shouldBeAnInstanceOf(Consumer::class);
+        $this->consumer()->givenNames()->shouldBe('Joe');
+        $this->consumer()->surname()->shouldBe('Consumer');
+        $this->consumer()->phoneNumber()->shouldBe('07000000000');
+        $this->consumer()->email()->shouldBe('test@example.com');
+
         $this->billing()->shouldBeAnInstanceOf(Contact::class);
+        $this->billing()->name()->shouldBe('Joe Consumer');
+        $this->billing()->line1()->shouldBe('1 Market Street');
+        $this->billing()->line2()->shouldBe('');
+        $this->billing()->area1()->shouldBe('');
+        $this->billing()->area2()->shouldBe('');
+        $this->billing()->region()->shouldBe('MANCHESTER');
+        $this->billing()->postcode()->shouldBe('M4 3AT');
+        $this->billing()->countryCode()->shouldBe('GB');
+        $this->billing()->phoneNumber()->shouldBe('07000000000');
+
         $this->shipping()->shouldBeAnInstanceOf(Contact::class);
+        $this->shipping()->name()->shouldBe('Joe Consumer');
+        $this->shipping()->line1()->shouldBe('1 Market Street');
+        $this->shipping()->line2()->shouldBe('');
+        $this->shipping()->area1()->shouldBe('');
+        $this->shipping()->area2()->shouldBe('');
+        $this->shipping()->region()->shouldBe('MANCHESTER');
+        $this->shipping()->postcode()->shouldBe('M4 3AT');
+        $this->shipping()->countryCode()->shouldBe('GB');
+        $this->shipping()->phoneNumber()->shouldBe('07000000000');
+
         $this->courier()->shouldBeAnInstanceOf(ShippingCourier::class);
+        $this->courier()->name()->shouldBe('Parcelforce Worldwide');
+        $this->courier()->tracking()->shouldBe('AAAA1234567890');
+        $this->courier()->priority()->shouldBe('STANDARD');
 
         $this->items()->shouldBeAnInstanceOf(Collection::class);
         $this->items()->shouldHaveCount(2);
@@ -42,7 +70,67 @@ class OrderDetailsSpec extends ObjectBehavior
         $this->discounts()[0]->displayName()->shouldBe('10% Off Subtotal');
 
         $this->taxAmount()->shouldBeAnInstanceOf(Money::class);
+        $this->taxAmount()->amount()->shouldBe('22.00');
+        $this->taxAmount()->currency()->shouldBe('GBP');
+
         $this->shippingAmount()->shouldBeAnInstanceOf(Money::class);
+        $this->shippingAmount()->amount()->shouldBe('20.00');
+        $this->shippingAmount()->currency()->shouldBe('GBP');
+    }
+
+    function it_has_minimum_order_details()
+    {
+        $this->beConstructedFromState(
+            $this->minimumOrderDetailsState()
+        );
+
+        $this->consumer()->shouldBeAnInstanceOf(Consumer::class);
+        $this->consumer()->givenNames()->shouldBe('Joe');
+        $this->consumer()->surname()->shouldBe('Consumer');
+        $this->consumer()->phoneNumber()->shouldBe('07000000000');
+        $this->consumer()->email()->shouldBe('test@example.com');
+
+        $this->billing()->shouldBeAnInstanceOf(Contact::class);
+        $this->billing()->name()->shouldBe('');
+        $this->billing()->line1()->shouldBe('');
+        $this->billing()->line2()->shouldBe('');
+        $this->billing()->area1()->shouldBe('');
+        $this->billing()->area2()->shouldBe('');
+        $this->billing()->region()->shouldBe('');
+        $this->billing()->postcode()->shouldBe('');
+        $this->billing()->countryCode()->shouldBe('');
+        $this->billing()->phoneNumber()->shouldBe('');
+
+        $this->shipping()->shouldBeAnInstanceOf(Contact::class);
+        $this->shipping()->name()->shouldBe('');
+        $this->shipping()->line1()->shouldBe('');
+        $this->shipping()->line2()->shouldBe('');
+        $this->shipping()->area1()->shouldBe('');
+        $this->shipping()->area2()->shouldBe('');
+        $this->shipping()->region()->shouldBe('');
+        $this->shipping()->postcode()->shouldBe('');
+        $this->shipping()->countryCode()->shouldBe('');
+        $this->shipping()->phoneNumber()->shouldBe('');
+
+        $this->courier()->shouldBeAnInstanceOf(ShippingCourier::class);
+        $this->courier()->name()->shouldBe('');
+        $this->courier()->tracking()->shouldBe('');
+        $this->courier()->priority()->shouldBe('');
+
+        $this->items()->shouldBeAnInstanceOf(Collection::class);
+        $this->items()->shouldHaveCount(0);
+
+        $this->discounts()->shouldImplement(Collection::class);
+        $this->discounts()->shouldHaveCount(0);
+
+        $this->taxAmount()->shouldBeAnInstanceOf(Money::class);
+        $this->taxAmount()->amount()->shouldBe('');
+        $this->taxAmount()->currency()->shouldBe('');
+
+        $this->shippingAmount()->shouldBeAnInstanceOf(Money::class);
+        $this->shippingAmount()->amount()->shouldBe('');
+        $this->shippingAmount()->currency()->shouldBe('');
+
     }
 
     private function fullOrderDetailsState()
@@ -125,6 +213,22 @@ class OrderDetailsSpec extends ObjectBehavior
     "amount": "20.00",
     "currency": "GBP"
   }
+}
+JSON;
+
+        return JsonHandler::decode($json, true);
+    }
+
+    private function minimumOrderDetailsState()
+    {
+        $json = <<<JSON
+{
+    "consumer": {
+        "phoneNumber": "07000000000",
+        "givenNames": "Joe",
+        "surname": "Consumer",
+        "email": "test@example.com"
+    }
 }
 JSON;
 

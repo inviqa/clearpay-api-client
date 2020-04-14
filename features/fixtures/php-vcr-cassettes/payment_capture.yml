@@ -1,0 +1,121 @@
+
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/payments/123456789101112/capture'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            Content-Type: application/json
+            Accept: application/json
+        body: '{"requestId":null,"amount":{"amount":"10.00","currency":"GBP"},"merchantReference":null,"paymentEventMerchantReference":null}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '410'
+            message: Gone
+        headers:
+            Date: 'Thu, 09 Apr 2020 15:07:30 GMT'
+            Content-Type: application/json
+            Content-Length: '160'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d36bda7abcdad1bfed73834078900e4c51586444850; expires=Sat, 09-May-20 15:07:30 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: k3tzz6bdgq6p3zsxsvkkujx3ey
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 5815235a6d9ace87-LHR
+        body: "{\n  \"errorCode\" : \"payment_captured\",\n  \"errorId\" : \"1262678c59dd1e24\",\n  \"message\" : \"The payment has already been fully captured.\",\n  \"httpStatusCode\" : 410\n}"
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/payments/400123851541/capture'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            Content-Type: application/json
+            Accept: application/json
+        body: '{"requestId":null,"amount":{"amount":"10.00","currency":"GBP"},"merchantReference":null,"paymentEventMerchantReference":null}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '412'
+            message: 'Precondition Failed'
+        headers:
+            Date: 'Thu, 09 Apr 2020 15:20:55 GMT'
+            Content-Type: application/json
+            Content-Length: '135'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d91934e668f21b5dd6e0e98ab2c01ff2c1586445655; expires=Sat, 09-May-20 15:20:55 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: pgwqfi6abpat5b5atfl7m7g6be
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 581537053b45e628-LHR
+        body: "{\n  \"errorCode\" : \"invalid_state\",\n  \"errorId\" : \"b81d31ec32adf824\",\n  \"message\" : \"Order is not approved.\",\n  \"httpStatusCode\" : 412\n}"
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/payments/400123851422/capture'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            Content-Type: application/json
+            Accept: application/json
+        body: '{"requestId":null,"amount":{"amount":"10.00","currency":"GBP"},"merchantReference":null,"paymentEventMerchantReference":null}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '412'
+            message: 'Precondition Failed'
+        headers:
+            Date: 'Thu, 09 Apr 2020 15:24:04 GMT'
+            Content-Type: application/json
+            Content-Length: '145'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d32090c788de82fbbb6ae58280b459e191586445844; expires=Sat, 09-May-20 15:24:04 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: pok7ny6vaskpnkl5kjfno6as4q
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 58153ba1fbf0dbdf-LHR
+        body: "{\n  \"errorCode\" : \"payment_voided\",\n  \"errorId\" : \"0bd831f3f492888b\",\n  \"message\" : \"The auth was previously voided.\",\n  \"httpStatusCode\" : 412\n}"
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/payments/400123851542/capture'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Expect: null
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            Content-Type: application/json
+            Accept: application/json
+        body: '{"requestId":null,"amount":{"amount":"30.00","currency":"GBP"},"merchantReference":null,"paymentEventMerchantReference":null}'
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Date: 'Thu, 09 Apr 2020 15:33:59 GMT'
+            Content-Type: application/json
+            Content-Length: '1239'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d9e99878e61f49702c42ec7a7a925ed561586446439; expires=Sat, 09-May-20 15:33:59 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: fc7rda5h3cwwgbqjv2lr7vfere
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 58154a256e17dbeb-LHR
+        body: "{\n  \"id\" : \"400123851542\",\n  \"token\" : \"003.gb393bn1r2v3a0kotv4mlhgof8d5ondm01ldj793gneduppe\",\n  \"status\" : \"APPROVED\",\n  \"created\" : \"2020-04-09T15:26:53.140Z\",\n  \"originalAmount\" : {\n    \"amount\" : \"30.00\",\n    \"currency\" : \"GBP\"\n  },\n  \"openToCaptureAmount\" : {\n    \"amount\" : \"0.00\",\n    \"currency\" : \"GBP\"\n  },\n  \"paymentState\" : \"CAPTURED\",\n  \"merchantReference\" : \"ref-5e8f3ea1a27c0\",\n  \"refunds\" : [ ],\n  \"orderDetails\" : {\n    \"consumer\" : {\n      \"phoneNumber\" : \"07123123456\",\n      \"givenNames\" : \"Testy\",\n      \"surname\" : \"Testerson\",\n      \"email\" : \"bmcmanus+clearpay-customer@inviqa.com\"\n    },\n    \"courier\" : { },\n    \"items\" : [ ],\n    \"discounts\" : [ ]\n  },\n  \"events\" : [ {\n    \"id\" : \"1aJG2lUme9AEyz12sN3zhpnrDqU\",\n    \"created\" : \"2020-04-09T15:27:57.308Z\",\n    \"expires\" : \"2020-04-11T03:27:57.308Z\",\n    \"type\" : \"AUTH_APPROVED\",\n    \"amount\" : {\n      \"amount\" : \"30.00\",\n      \"currency\" : \"GBP\"\n    },\n    \"paymentEventMerchantReference\" : null\n  }, {\n    \"id\" : \"1aJGmEpQdiZGRX4tfpxernxRoLd\",\n    \"created\" : \"2020-04-09T15:33:59.338Z\",\n    \"expires\" : null,\n    \"type\" : \"CAPTURED\",\n    \"amount\" : {\n      \"amount\" : \"30.00\",\n      \"currency\" : \"GBP\"\n    },\n    \"paymentEventMerchantReference\" : null\n  } ]\n}"

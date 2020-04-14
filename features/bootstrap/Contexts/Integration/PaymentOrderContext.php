@@ -5,14 +5,12 @@ namespace Contexts\Integration;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\TableNode;
-use Inviqa\Clearpay\Api\Response\Payment\Auth;
+use Inviqa\Clearpay\Api\Response\Payment\Payment;
 use Inviqa\Clearpay\Api\Response\Payment\Refund;
 use Inviqa\Clearpay\Application;
-use Inviqa\Clearpay\Exception\ClientErrorHttpException;
 use Inviqa\Clearpay\Exception\HttpException;
 use PHPUnit\Framework\Assert;
 use Services\HttpMockConfig;
-use Services\TestConfig;
 
 class PaymentOrderContext implements Context
 {
@@ -35,18 +33,26 @@ class PaymentOrderContext implements Context
     /**
      * @var null|string
      */
-    private $merchantRef= null;
-    /**
-     * @var Auth
-     */
-    private $result;
+    private $merchantRef = null;
     /**
      * @var string
      */
     private $clearpayErrorCode;
-    /** @var Refund */
+    /**
+     * @var Refund
+     */
     private $resultRefund;
+    /**
+     * @var Payment
+     */
+    private $resultPayment;
+    /**
+     * @var string
+     */
     private $orderId;
+    /**
+     * @var string
+     */
     private $orderStatus;
 
     public function __construct(string $cassettePath)
@@ -64,6 +70,13 @@ class PaymentOrderContext implements Context
         $this->orderId = $orderId;
     }
 
+    /**
+     * @Given I have checkout token :token
+     */
+    public function iHaveCheckoutToken(string $token = '')
+    {
+        $this->token = $token;
+    }
 
     /**
      * @Given I have Order Id :orderId with a status of :orderStatus
@@ -83,7 +96,7 @@ class PaymentOrderContext implements Context
     }
 
     /**
-     * @Given I have Merchant Reference :merchantRef
+     * @Given I have merchant reference :merchantRef
      */
     public function iHaveMerchantReference($merchantRef)
     {
@@ -148,11 +161,22 @@ class PaymentOrderContext implements Context
     }
 
     /**
-     * @Given I have checkout token :token
+     * @When I capture :amount in :currency for the order
      */
-    public function iHaveCheckoutToken(string $token = '')
+    public function iCaptureTheOrderFunds($amount, $currency)
     {
-        $this->token = $token;
+        try {
+            $this->httpRecorder->insertCassette('payment_capture.yml');
+            $this->resultPayment = $this->application->paymentCapture(
+                $this->orderId,
+                $amount,
+                $currency
+            );
+            $this->httpRecorder->eject();
+        }
+        catch (HttpException $e) {
+            $this->clearpayErrorCode = $e->clearpayErrorCode();
+        }
     }
 
     /**
@@ -162,7 +186,7 @@ class PaymentOrderContext implements Context
     {
         try {
             $this->httpRecorder->insertCassette('payment_auth.yml');
-            $this->result = $this->application->paymentAuth(
+            $this->resultPayment = $this->application->paymentAuth(
                 $this->token,
                 $this->requestId,
                 $this->merchantRef
@@ -181,7 +205,7 @@ class PaymentOrderContext implements Context
     {
         Assert::assertEquals(
             $paymentStatus,
-            $this->result->status()
+            $this->resultPayment->status()
         );
     }
 
@@ -192,7 +216,7 @@ class PaymentOrderContext implements Context
     {
         Assert::assertEquals(
             $paymentState,
-            $this->result->paymentState()
+            $this->resultPayment->paymentState()
         );
     }
 

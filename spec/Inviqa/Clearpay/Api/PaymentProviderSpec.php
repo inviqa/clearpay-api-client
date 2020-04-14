@@ -3,6 +3,7 @@
 namespace spec\Inviqa\Clearpay\Api;
 
 use Inviqa\Clearpay\Api\PaymentProvider;
+use Inviqa\Clearpay\Api\Response\Payment\Payment;
 use Inviqa\Clearpay\Http\Adapter;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -36,7 +37,7 @@ class PaymentProviderSpec extends ObjectBehavior
         Adapter $client,
         StreamInterface $stream
     ) {
-        $stream->getContents()->willReturn($this->fullJsonAuthResponseBody());
+        $stream->getContents()->willReturn($this->fullJsonPaymentResponseBody());
 
         $requestId = uniqid();
         $token = 'TOKEN';
@@ -44,7 +45,7 @@ class PaymentProviderSpec extends ObjectBehavior
 
         $result = $this->auth($token, $requestId, $merchantRef);
 
-        $result->token()->shouldBe('ltqdpjhbqu3veqikk95g7p3fhvcchfvtlsiobah3u4l5nln8gii9');
+        $result->shouldBeAnInstanceOf(Payment::class);
 
         $expectedJson = json_encode([
             'requestId'         => $requestId,
@@ -54,6 +55,52 @@ class PaymentProviderSpec extends ObjectBehavior
 
         $client->post(
             'payments/auth',
+            [
+                'Content-Type' => 'application/json',
+                'Accept'       => 'application/json'
+            ],
+            $expectedJson
+        )->shouldHaveBeenCalled();
+    }
+
+    function it_can_make_a_capture_request(
+        Adapter $client,
+        StreamInterface $stream
+    ) {
+        $stream
+            ->getContents()
+            ->willReturn(
+                $this->fullJsonPaymentResponseBody()
+            );
+
+        $orderId = 'clearpay-order-id';
+        $requestId = 'request-id';
+        $captureAmount = '10.00';
+        $captureCurrency = 'GBP';
+        $merchantReference = 'merchant-order-ref';
+        $paymentEventMerchantReference = 'merchant-payment-ref';
+
+        $this->capture(
+            $orderId,
+            $captureAmount,
+            $captureCurrency,
+            $requestId,
+            $merchantReference,
+            $paymentEventMerchantReference
+        );
+
+        $expectedJson = json_encode([
+            'requestId'                     => $requestId,
+            'amount'                        => [
+                'amount'   => $captureAmount,
+                'currency' => $captureCurrency
+            ],
+            'merchantReference'             => $merchantReference,
+            'paymentEventMerchantReference' => $paymentEventMerchantReference
+        ]);
+
+        $client->post(
+            'payments/' . $orderId . '/capture',
             [
                 'Content-Type' => 'application/json',
                 'Accept'       => 'application/json'
@@ -108,36 +155,80 @@ class PaymentProviderSpec extends ObjectBehavior
         )->shouldHaveBeenCalled();
     }
 
-    private function fullJsonAuthResponseBody()
+    private function fullJsonPaymentResponseBody()
     {
         return <<<JSON
 {
-  "id" : "12345678",
-  "token" : "ltqdpjhbqu3veqikk95g7p3fhvcchfvtlsiobah3u4l5nln8gii9",
-  "status" : "APPROVED",
-  "created" : "2019-01-01T00:00:00.000Z",
-  "originalAmount" : {
-    "amount" : "100.00",
-    "currency" : "GBP"
-  },
-  "openToCaptureAmount" : {
-    "amount" : "100.00",
-    "currency" : "GBP"
-  },
-  "paymentState" : "AUTH_APPROVED",
-  "merchantReference" : "merchantOrderId-1234",
-  "refunds" : [],
-  "orderDetails" : {},
-  "events" : [{
-    "id" : "1OUR16OTqL3DgJ3ELlwKowU9v6K",
-    "created" : "2019-01-01T00:00:00.000Z",
-    "expires" : "2019-01-01T00:00:00.000Z",
-    "type" : "AUTH_APPROVED",
-    "amount" : {
-      "amount" : "100.00",
-      "currency" : "GBP"
-    }
-  }]
+    "id": "400123851519",
+    "token": "003.gdekaou4h9e4nnkf1ejjip26ghmi9aeflhchg7oi9nddc771",
+    "status": "APPROVED",
+    "created": "2020-04-08T09:44:33.231Z",
+    "originalAmount": {
+        "amount": "30.00",
+        "currency": "GBP"
+    },
+    "openToCaptureAmount": {
+        "amount": "0.00",
+        "currency": "GBP"
+    },
+    "paymentState": "CAPTURED",
+    "merchantReference": "ref-5e8d9ce279fdd",
+    "refunds": [
+        {
+            "amount": {
+                "amount": "20.00",
+                "currency": "GBP"
+            },
+            "id": "3221",
+            "refundedAt": "2020-04-08T13:37:46.639Z"
+        }
+    ],
+    "orderDetails": {
+        "consumer": {
+            "phoneNumber": "07855782357",
+            "givenNames": "Testy",
+            "surname": "Testerson",
+            "email": "bmcmanus+clearpay-customer@inviqa.com"
+        },
+        "courier": {},
+        "items": [],
+        "discounts": []
+    },
+    "events": [
+        {
+            "id": "1aFls8coGVgpTC9QvrK6mpnjaH8",
+            "created": "2020-04-08T09:50:26.135Z",
+            "expires": "2020-04-09T21:50:26.135Z",
+            "type": "AUTH_APPROVED",
+            "amount": {
+                "amount": "30.00",
+                "currency": "GBP"
+            },
+            "paymentEventMerchantReference": null
+        },
+        {
+            "id": "1aGDMrB7wL2rrc27joIIcNdEFRV",
+            "created": "2020-04-08T13:36:31.139Z",
+            "expires": null,
+            "type": "CAPTURED",
+            "amount": {
+                "amount": "10.00",
+                "currency": "GBP"
+            },
+            "paymentEventMerchantReference": null
+        },
+        {
+            "id": "1aGDWRxyqHMzEnBtfLwA0XBAwYQ",
+            "created": "2020-04-08T13:37:47.222Z",
+            "expires": null,
+            "type": "VOIDED",
+            "amount": {
+                "amount": "20.00",
+                "currency": "GBP"
+            },
+            "paymentEventMerchantReference": null
+        }
+    ]
 }
 JSON;
     }
