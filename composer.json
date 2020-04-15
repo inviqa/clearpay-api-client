@@ -27,7 +27,8 @@
     "scripts": {
         "sniff": "bin/phpcs --colors --cache --standard=PSR2 -p -s -v src/",
         "beauty": "bin/phpcbf --standard=PSR2 src/",
-        "static": "bin/phpstan analyse src --level=max --ansi --verbose",
+        "stan": "bin/phpstan analyse src --level=max --ansi --verbose",
+        "psalm": "bin/psalm --no-cache --long-progress",
         "spec": "bin/phpspec run --format=pretty --no-code-generation --stop-on-failure --ansi",
         "integration": "bin/behat --suite integration -f pretty --stop-on-failure --colors",
         "e2e": "bin/behat --suite end2end -f pretty --stop-on-failure --colors --tags @end2end",
@@ -38,7 +39,8 @@
         ],
         "test-quality": [
             "@sniff",
-            "@static"
+            "@stan",
+            "@psalm"
         ],
         "test-unit": [
             "@spec"
