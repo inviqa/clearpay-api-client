@@ -7,7 +7,7 @@
             Host: api.eu-sandbox.afterpay.com
             Expect: null
             Accept-Encoding: null
-            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            User-Agent: 'inviqa-clearpay-api-client (PHP/7.2.27; curl/7.52.1) integration-test'
             Content-Type: application/json
             Accept: application/json
         body: '{"amount":{"amount":"30.00","currency":"GBP"},"consumer":{"phoneNumber":"0123456789","givenNames":"Testy","surname":"testerson","email":"name@example.com"},"merchant":{"redirectConfirmUrl":"https:\/\/example.com\/checkout\/confirm","redirectCancelUrl":"https:\/\/example.com\/checkout\/cancel"}}'
@@ -37,7 +37,7 @@
             Host: api.eu-sandbox.afterpay.com
             Expect: null
             Accept-Encoding: null
-            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            User-Agent: 'inviqa-clearpay-api-client (PHP/7.2.27; curl/7.52.1) integration-test'
             Content-Type: application/json
             Accept: application/json
         body: '{"requestId":null,"token":"003.plo9306h9kntg5bd6rhjgj7rua2qh718dphvkckg7gd54f72","merchantReference":null}'
@@ -67,7 +67,7 @@
             Host: api.eu-sandbox.afterpay.com
             Expect: null
             Accept-Encoding: null
-            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            User-Agent: 'inviqa-clearpay-api-client (PHP/7.2.27; curl/7.52.1) integration-test'
             Content-Type: application/json
             Accept: application/json
         body: '{"requestId":"successful-request","token":"003.plo9306h9kntg5bd6rhjgj7rua2qh718dphvkckg7gd54f72","merchantReference":"success"}'
@@ -97,7 +97,7 @@
             Host: api.eu-sandbox.afterpay.com
             Expect: null
             Accept-Encoding: null
-            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            User-Agent: 'inviqa-clearpay-api-client (PHP/7.2.27; curl/7.52.1) integration-test'
             Content-Type: application/json
             Accept: application/json
         body: '{"requestId":null,"token":"expired-token","merchantReference":null}'
@@ -127,7 +127,7 @@
             Host: api.eu-sandbox.afterpay.com
             Expect: null
             Accept-Encoding: null
-            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            User-Agent: 'inviqa-clearpay-api-client (PHP/7.2.27; curl/7.52.1) integration-test'
             Content-Type: application/json
             Accept: application/json
         body: '{"requestId":"","token":"","merchantReference":""}'
@@ -157,7 +157,7 @@
             Host: api.eu-sandbox.afterpay.com
             Expect: null
             Accept-Encoding: null
-            User-Agent: 'GuzzleHttp/6.5.1 curl/7.52.1 PHP/7.2.27'
+            User-Agent: 'inviqa-clearpay-api-client (PHP/7.2.27; curl/7.52.1) integration-test'
             Content-Type: application/json
             Accept: application/json
         body: '{"requestId":null,"token":"","merchantReference":null}'

@@ -63,11 +63,11 @@ class OrderDetails
 
     public static function fromState(array $state): self
     {
-        $items = self::map($state['items'] ?? [], function ($item) {
+        $items = self::map($state['items'] ?? [], function (array $item) {
             return Item::fromState($item);
         });
 
-        $discounts = self::map($state['discounts'] ?? [], function ($discount) {
+        $discounts = self::map($state['discounts'] ?? [], function (array $discount) {
             return Discount::fromState($discount);
         });
 

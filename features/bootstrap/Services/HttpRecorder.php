@@ -31,8 +31,11 @@ class HttpRecorder
                 function (Request $first, Request $second) {
                     $firstHeaders = $first->getHeaders();
                     $secondHeaders = $second->getHeaders();
-                    unset($firstHeaders['Authorization']);
-                    unset($secondHeaders['Authorization']);
+
+                    foreach (['Authorization', 'User-Agent'] as $header) {
+                        unset($firstHeaders[$header], $secondHeaders[$header]);
+                    }
+                    unset($header);
 
                     return $firstHeaders == $secondHeaders;
                 }
