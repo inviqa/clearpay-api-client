@@ -107,11 +107,11 @@ class Payment
 
     public static function fromState(array $state): self
     {
-        $refunds = self::map($state['refunds'], function ($refund) {
+        $refunds = self::map($state['refunds'], function (array $refund) {
             return Refund::fromState($refund);
         });
 
-        $events = self::map($state['events'], function ($event) {
+        $events = self::map($state['events'], function (array $event) {
             return PaymentEvent::fromState($event);
         });
 
