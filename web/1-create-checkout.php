@@ -30,6 +30,16 @@ unset($domain);
 
 $params = array_merge($defaults, $_POST);
 
+$territoryMap = [
+    'GBP' => 'GB',
+    'AUD' => 'AU',
+    'USD' => 'US',
+    'NZD' => 'NZ'
+];
+
+$territory = $territoryMap[$params['amount']['currency']];
+unset($territoryMap);
+
 try {
     $token = $app->createCheckout($params)->token();
 } catch (Exception $e) {
@@ -39,7 +49,11 @@ try {
 <html>
 <head>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <?php if ($territory === 'GB'): ?>
     <script type="text/javascript" src="https://portal.sandbox.clearpay.co.uk/afterpay.js"></script>
+    <?php else: ?>
+    <script type="text/javascript" src="https://portal.sandbox.afterpay.com/afterpay.js"></script>
+    <?php endif; ?>
 </head>
 <body>
 <div class="container mx-auto mt-20">
@@ -59,7 +73,8 @@ try {
             Authorize
         </a>
     </div>
-
+    <hr>
+    AfterpayJS Territory: <?php echo $territory; ?>
     <hr>
     Auth Params:
     <pre>
@@ -69,7 +84,7 @@ try {
 </div>
 <script type="text/javascript">
     document.getElementById("clearpay-button").addEventListener("click", function() {
-        AfterPay.initialize({countryCode: "GB"});
+        AfterPay.initialize({countryCode: "<?php echo $territory; ?>"});
         AfterPay.open();
         // If you don't already have a checkout token at this point, you can
         // AJAX to your backend to retrieve one here. The spinning animation

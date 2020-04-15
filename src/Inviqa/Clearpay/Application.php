@@ -2,7 +2,6 @@
 
 namespace Inviqa\Clearpay;
 
-use Inviqa\Clearpay\Api\PaymentProvider;
 use Inviqa\Clearpay\Api\Response\Checkout\Create;
 use Inviqa\Clearpay\Api\Response\ConfigurationResponse;
 use Inviqa\Clearpay\Api\Response\Payment\Payment;
