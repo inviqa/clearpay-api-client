@@ -5,3 +5,8 @@ Feature: Merchant can void funds from Clearpay Order
         When I void the open to capture amount in the order
         Then I should have an "APPROVED" payment status
         And I should have an "VOIDED" payment state
+
+    Scenario: Payment has already been fully captured
+        Given I have Order Id "400123851788"
+        When I void the open to capture amount in the order
+        Then I should have an "payment_captured" error
