@@ -73,7 +73,7 @@ class PaymentSpec extends ObjectBehavior
     "merchantReference": "merchantOrderId-1234",
     "refunds": [
         {
-            "id": "67890123",
+            "refundId": "67890123",
             "refundedAt": "2019-01-01T00:00:00.000Z",
             "merchantReference": "merchantRefundId-1234",
             "amount": {

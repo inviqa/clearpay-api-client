@@ -46,7 +46,7 @@ class Refund
     public static function fromState(array $state): self
     {
         return new self(
-            $state['id'],
+            $state['refundId'],
             DateTime::fromTimeString($state['refundedAt'])->asDateTime(),
             $state['merchantReference'] ?? '',
             Money::fromState($state['amount'])

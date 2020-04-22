@@ -203,7 +203,7 @@ class PaymentProviderSpec extends ObjectBehavior
                 "amount": "20.00",
                 "currency": "GBP"
             },
-            "id": "3221",
+            "refundId": "3221",
             "refundedAt": "2020-04-08T13:37:46.639Z"
         }
     ],
@@ -261,7 +261,7 @@ JSON;
     {
         return <<<JSON
 {
-  "id": "67890123",
+  "refundId": "67890123",
   "refundedAt": "2019-01-01T00:00:00.000Z",
   "merchantReference": "merchantRefundId-1234",
   "amount": {
