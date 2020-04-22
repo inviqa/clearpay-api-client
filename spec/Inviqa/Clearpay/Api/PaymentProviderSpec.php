@@ -212,7 +212,7 @@ class PaymentProviderSpec extends ObjectBehavior
             "phoneNumber": "07855782357",
             "givenNames": "Testy",
             "surname": "Testerson",
-            "email": "bmcmanus+clearpay-customer@inviqa.com"
+            "email": "name@example.com"
         },
         "courier": {},
         "items": [],

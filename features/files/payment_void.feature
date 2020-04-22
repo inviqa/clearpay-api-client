@@ -10,3 +10,13 @@ Feature: Merchant can void funds from Clearpay Order
         Given I have Order Id "400123851788"
         When I void the open to capture amount in the order
         Then I should have an "payment_captured" error
+
+    Scenario: Empty Order Id was passed to endpoint
+        Given I have Order Id ""
+        When I void the open to capture amount in the order
+        Then I should have an "not_found" error
+
+    Scenario: Fake Order Id was passed to endpoint
+        Given I have Order Id "12345678998"
+        When I void the open to capture amount in the order
+        Then I should have an "error" error
