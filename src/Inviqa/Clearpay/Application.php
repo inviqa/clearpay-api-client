@@ -69,9 +69,9 @@ class Application
         );
     }
 
-    public function paymentVoid(string $orderId)
+    public function paymentVoid(string $orderId): Payment
     {
-        return true;
+        return (new Api\PaymentProvider($this->client))->void($orderId);
     }
 
     public function paymentRefund(
