@@ -69,6 +69,11 @@ class Application
         );
     }
 
+    public function paymentVoid(string $orderId)
+    {
+        return true;
+    }
+
     public function paymentRefund(
         string $orderId,
         string $refundAmount,
