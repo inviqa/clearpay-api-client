@@ -109,6 +109,30 @@ class PaymentProviderSpec extends ObjectBehavior
         )->shouldHaveBeenCalled();
     }
 
+    function it_can_make_a_void_request(
+        Adapter $client,
+        StreamInterface $stream
+    ) {
+        $stream
+            ->getContents()
+            ->willReturn(
+                $this->fullJsonPaymentResponseBody()
+            );
+
+        $orderId = '123456789';
+
+        $this->void($orderId);
+
+        $client->post(
+            'payments/' . $orderId . '/void',
+            [
+                'Content-Type' => 'application/json',
+                'Accept'       => 'application/json'
+            ],
+            null
+        )->shouldHaveBeenCalled();
+    }
+
     function it_can_make_a_refund_request(
         Adapter $client,
         StreamInterface $stream

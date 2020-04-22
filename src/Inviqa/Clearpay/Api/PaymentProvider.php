@@ -70,6 +70,19 @@ class PaymentProvider
         );
     }
 
+    public function void(string $orderId): Payment
+    {
+        $result = $this->adapter->post(
+            sprintf('payments/%s/void', $orderId),
+            $this->defaultPostHeaders(),
+            null
+        );
+
+        return Payment::fromHttpResponse(
+            Response::fromHttpResponse($result)
+        );
+    }
+
     public function refund(
         string $orderId,
         string $refundAmount,
