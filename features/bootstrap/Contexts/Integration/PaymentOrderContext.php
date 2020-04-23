@@ -199,6 +199,23 @@ class PaymentOrderContext implements Context
     }
 
     /**
+     * @When I void the open to capture amount in the order
+     */
+    public function iVoidTheOpenToCaptureAmountInTheOrder()
+    {
+        try {
+            $this->httpRecorder->insertCassette('payment_void.yml');
+            $this->resultPayment = $this->application->paymentVoid(
+                $this->orderId
+            );
+            $this->httpRecorder->eject();
+        }
+        catch (HttpException $e) {
+            $this->clearpayErrorCode = $e->clearpayErrorCode();
+        }
+    }
+
+    /**
      * @Then I should have an :paymentStatus payment status
      */
     public function iShouldHaveAnPaymentStatus($paymentStatus)

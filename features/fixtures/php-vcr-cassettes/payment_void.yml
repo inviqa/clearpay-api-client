@@ -1,0 +1,121 @@
+
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/payments/400123851803/void'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Content-Length: '0'
+            Accept-Encoding: null
+            User-Agent: 'inviqa-clearpay-api-client (PHP/7.2.27; curl/7.52.1) integration-test'
+            Content-Type: application/json
+            Accept: application/json
+    response:
+        status:
+            http_version: '1.1'
+            code: '201'
+            message: Created
+        headers:
+            Date: 'Wed, 22 Apr 2020 15:44:05 GMT'
+            Content-Type: application/json
+            Content-Length: '1391'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=dfd4d7f4bf2f9e2cf40fac02ea75652121587570245; expires=Fri, 22-May-20 15:44:05 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: s2j62wfh2l7b32ghi3mq2ysz6q
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 588076d1f834bb88-LHR
+            cf-request-id: 02442897380000bb884090e200000001
+        body: "{\n  \"id\" : \"400123851803\",\n  \"token\" : \"003.9ftlid7j234ddds8tv00vrrkm8ukpaddeen7ltrmdt54tha0\",\n  \"status\" : \"APPROVED\",\n  \"created\" : \"2020-04-22T15:41:50.317Z\",\n  \"originalAmount\" : {\n    \"amount\" : \"100.00\",\n    \"currency\" : \"GBP\"\n  },\n  \"openToCaptureAmount\" : {\n    \"amount\" : \"0.00\",\n    \"currency\" : \"GBP\"\n  },\n  \"paymentState\" : \"VOIDED\",\n  \"merchantReference\" : \"ref-5ea065960cf03\",\n  \"refunds\" : [ {\n    \"amount\" : {\n      \"amount\" : \"100.00\",\n      \"currency\" : \"GBP\"\n    },\n    \"refundId\" : \"3388\",\n    \"refundedAt\" : \"2020-04-22T15:44:05.649Z\"\n  } ],\n  \"orderDetails\" : {\n    \"consumer\" : {\n      \"phoneNumber\" : \"07123456789\",\n      \"givenNames\" : \"Testy\",\n      \"surname\" : \"Testerson\",\n      \"email\" : \"name@example.com\"\n    },\n    \"courier\" : { },\n    \"items\" : [ ],\n    \"discounts\" : [ ]\n  },\n  \"events\" : [ {\n    \"id\" : \"1au0SuGeXnJAttu5RPisQ72hHIT\",\n    \"created\" : \"2020-04-22T15:42:54.482Z\",\n    \"expires\" : \"2020-04-24T03:42:54.482Z\",\n    \"type\" : \"AUTH_APPROVED\",\n    \"amount\" : {\n      \"amount\" : \"100.00\",\n      \"currency\" : \"GBP\"\n    },\n    \"paymentEventMerchantReference\" : null\n  }, {\n    \"id\" : \"1au0brZAZ2DQqcAZPtMoInKdvPm\",\n    \"created\" : \"2020-04-22T15:44:05.921Z\",\n    \"expires\" : null,\n    \"type\" : \"VOIDED\",\n    \"amount\" : {\n      \"amount\" : \"100.00\",\n      \"currency\" : \"GBP\"\n    },\n    \"paymentEventMerchantReference\" : null\n  } ]\n}"
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/payments/400123851788/void'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Content-Length: '0'
+            Accept-Encoding: null
+            User-Agent: 'inviqa-clearpay-api-client (PHP/7.2.27; curl/7.52.1) integration-test'
+            Content-Type: application/json
+            Accept: application/json
+    response:
+        status:
+            http_version: '1.1'
+            code: '410'
+            message: Gone
+        headers:
+            Date: 'Wed, 22 Apr 2020 16:40:17 GMT'
+            Content-Type: application/json
+            Content-Length: '160'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d06ad2d06c2c362a836b91be06adbcf001587573617; expires=Fri, 22-May-20 16:40:17 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: fxmmhjv7oa7iwyxufxfmy5mj5a
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 5880c923af9ed218-MAN
+            cf-request-id: 02445c0a490000d218368a7200000001
+        body: "{\n  \"errorCode\" : \"payment_captured\",\n  \"errorId\" : \"9f6bb98321d739d0\",\n  \"message\" : \"The payment has already been fully captured.\",\n  \"httpStatusCode\" : 410\n}"
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/payments//void'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Content-Length: '0'
+            Accept-Encoding: null
+            User-Agent: 'inviqa-clearpay-api-client (PHP/7.2.27; curl/7.52.1) integration-test'
+            Content-Type: application/json
+            Accept: application/json
+    response:
+        status:
+            http_version: '1.1'
+            code: '404'
+            message: 'Not Found'
+        headers:
+            Date: 'Wed, 22 Apr 2020 16:44:42 GMT'
+            Content-Type: application/json
+            Content-Length: '139'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d7782784c018be9dd76285a73b800ff101587573882; expires=Fri, 22-May-20 16:44:42 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: vm2jlrw7szrinterk5pmdsw6na
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 5880cf9c0d1abfbb-MAN
+            cf-request-id: 02446015890000bfbbfda45200000001
+        body: "{\n  \"errorCode\" : \"not_found\",\n  \"errorId\" : \"7a08a697caf3aeef\",\n  \"message\" : \"Afterpay payment ID not found.\",\n  \"httpStatusCode\" : 404\n}"
+-
+    request:
+        method: POST
+        url: 'https://api.eu-sandbox.afterpay.com/v2/payments/12345678998/void'
+        headers:
+            Host: api.eu-sandbox.afterpay.com
+            Content-Length: '0'
+            Accept-Encoding: null
+            User-Agent: 'inviqa-clearpay-api-client (PHP/7.2.27; curl/7.52.1) integration-test'
+            Content-Type: application/json
+            Accept: application/json
+    response:
+        status:
+            http_version: '1.1'
+            code: '500'
+            message: 'Internal Server Error'
+        headers:
+            Date: 'Wed, 22 Apr 2020 16:47:10 GMT'
+            Content-Type: application/json
+            Content-Length: '146'
+            Connection: keep-alive
+            Set-Cookie: '__cfduid=d7ee21ed61a6715cd64bc603993562b911587574030; expires=Fri, 22-May-20 16:47:10 GMT; path=/; domain=.afterpay.com; HttpOnly; SameSite=Lax; Secure'
+            HTTP_CORRELATION_ID: hrekv5qdrpkd5nkdk7v6hgvcmm
+            CF-Cache-Status: DYNAMIC
+            Expect-CT: 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"'
+            Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
+            Server: cloudflare
+            CF-RAY: 5880d33b08123675-MAN
+            cf-request-id: 02446258e7000036758d243200000001
+        body: "{\n  \"errorCode\" : \"error\",\n  \"errorId\" : \"e984139ef077605d\",\n  \"message\" : \"An error occurred processing your request\",\n  \"httpStatusCode\" : 500\n}"

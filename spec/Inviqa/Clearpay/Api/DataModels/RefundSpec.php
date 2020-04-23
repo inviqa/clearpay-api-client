@@ -46,7 +46,7 @@ class RefundSpec extends ObjectBehavior
     {
         return <<<JSON
 {
-  "id": "67890123",
+  "refundId": "67890123",
   "refundedAt": "2019-01-01T00:00:00.000Z",
   "merchantReference": "merchantRefundId-1234",
   "amount": {
@@ -61,7 +61,7 @@ JSON;
     {
         return <<<JSON
 {
-  "id": "67890123",
+  "refundId": "67890123",
   "refundedAt": "2019-01-01T00:00:00.000Z",
   "amount": {
     "amount": "10.00",

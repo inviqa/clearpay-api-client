@@ -8,6 +8,7 @@ use Inviqa\Clearpay\Http\Adapter;
 use Inviqa\Clearpay\Http\HeadersTrait;
 use Inviqa\Clearpay\Http\Response;
 use Inviqa\Clearpay\JsonHandler;
+use Psr\Http\Message\ResponseInterface;
 
 class PaymentProvider
 {
@@ -38,9 +39,7 @@ class PaymentProvider
             ])
         );
 
-        return Payment::fromHttpResponse(
-            Response::fromHttpResponse($response)
-        );
+        return $this->paymentResponse($response);
     }
 
     public function capture(
@@ -65,9 +64,18 @@ class PaymentProvider
             ])
         );
 
-        return Payment::fromHttpResponse(
-            Response::fromHttpResponse($result)
+        return $this->paymentResponse($result);
+    }
+
+    public function void(string $orderId): Payment
+    {
+        $result = $this->adapter->post(
+            sprintf('payments/%s/void', $orderId),
+            $this->defaultPostHeaders(),
+            null
         );
+
+        return $this->paymentResponse($result);
     }
 
     public function refund(
@@ -94,6 +102,13 @@ class PaymentProvider
 
         return Refund::fromHttpResponse(
             Response::fromHttpResponse($response)
+        );
+    }
+
+    private function paymentResponse(ResponseInterface $result): Payment
+    {
+        return Payment::fromHttpResponse(
+            Response::fromHttpResponse($result)
         );
     }
 }

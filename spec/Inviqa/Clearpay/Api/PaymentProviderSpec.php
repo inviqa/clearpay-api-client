@@ -109,6 +109,30 @@ class PaymentProviderSpec extends ObjectBehavior
         )->shouldHaveBeenCalled();
     }
 
+    function it_can_make_a_void_request(
+        Adapter $client,
+        StreamInterface $stream
+    ) {
+        $stream
+            ->getContents()
+            ->willReturn(
+                $this->fullJsonPaymentResponseBody()
+            );
+
+        $orderId = '123456789';
+
+        $this->void($orderId);
+
+        $client->post(
+            'payments/' . $orderId . '/void',
+            [
+                'Content-Type' => 'application/json',
+                'Accept'       => 'application/json'
+            ],
+            null
+        )->shouldHaveBeenCalled();
+    }
+
     function it_can_make_a_refund_request(
         Adapter $client,
         StreamInterface $stream
@@ -179,7 +203,7 @@ class PaymentProviderSpec extends ObjectBehavior
                 "amount": "20.00",
                 "currency": "GBP"
             },
-            "id": "3221",
+            "refundId": "3221",
             "refundedAt": "2020-04-08T13:37:46.639Z"
         }
     ],
@@ -188,7 +212,7 @@ class PaymentProviderSpec extends ObjectBehavior
             "phoneNumber": "07855782357",
             "givenNames": "Testy",
             "surname": "Testerson",
-            "email": "bmcmanus+clearpay-customer@inviqa.com"
+            "email": "name@example.com"
         },
         "courier": {},
         "items": [],
@@ -237,7 +261,7 @@ JSON;
     {
         return <<<JSON
 {
-  "id": "67890123",
+  "refundId": "67890123",
   "refundedAt": "2019-01-01T00:00:00.000Z",
   "merchantReference": "merchantRefundId-1234",
   "amount": {

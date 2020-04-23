@@ -148,4 +148,4 @@
             Strict-Transport-Security: 'max-age=31536000; includeSubDomains; preload'
             Server: cloudflare
             CF-RAY: 580ca4a25e4f0091-LHR
-        body: "{\"id\":\"67890123\",\"refundedAt\":\"2019-01-01T00:00:00.000Z\",\"merchantReference\":\"merchant-000-refunded\",\"amount\":{\"amount\":\"10.00\",\"currency\":\"GBP\"}}"
+        body: "{\"refundId\":\"67890123\",\"refundedAt\":\"2019-01-01T00:00:00.000Z\",\"merchantReference\":\"merchant-000-refunded\",\"amount\":{\"amount\":\"10.00\",\"currency\":\"GBP\"}}"
