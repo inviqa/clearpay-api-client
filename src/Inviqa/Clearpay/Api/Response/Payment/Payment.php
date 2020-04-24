@@ -11,6 +11,10 @@ class Payment
      * @var PaymentDataModel
      */
     private $payment;
+    /**
+     * @var array
+     */
+    private $state = [];
 
     private function __construct(PaymentDataModel $payment)
     {
@@ -19,11 +23,13 @@ class Payment
 
     public static function fromHttpResponse(Response $response): self
     {
-        return new self(
-            PaymentDataModel::fromState(
-                $response->asDecodedJson(true)
-            )
-        );
+        $state = $response->asDecodedJson(true);
+
+        $payment = new self(PaymentDataModel::fromState($state));
+
+        $payment->state = $state;
+
+        return $payment;
     }
 
     public function payment(): PaymentDataModel
@@ -94,5 +100,10 @@ class Payment
     public function paymentStateVoided(): bool
     {
         return $this->paymentState() === PaymentDataModel::PAYMENT_STATE_VOIDED;
+    }
+
+    public function toArray(): array
+    {
+        return $this->state;
     }
 }

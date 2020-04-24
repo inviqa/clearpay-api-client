@@ -12,6 +12,10 @@ class Refund
      * @var RefundDataModel
      */
     private $refundDataModel;
+    /**
+     * @var array
+     */
+    private $state = [];
 
     private function __construct(RefundDataModel $refundDataModel)
     {
@@ -20,11 +24,13 @@ class Refund
 
     public static function fromHttpResponse(Response $response): self
     {
-        return new self(
-            RefundDataModel::fromState(
-                $response->asDecodedJson(true)
-            )
-        );
+        $state = $response->asDecodedJson(true);
+
+        $refund = new self(RefundDataModel::fromState($state));
+
+        $refund->state = $state;
+
+        return $refund;
     }
 
     public function refundId(): string
@@ -48,5 +54,10 @@ class Refund
     public function amount(): Money
     {
         return $this->refundDataModel->amount();
+    }
+
+    public function toArray(): array
+    {
+        return $this->state;
     }
 }

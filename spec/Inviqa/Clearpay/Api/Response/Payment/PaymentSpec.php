@@ -45,6 +45,11 @@ class PaymentSpec extends ObjectBehavior
         $this->paymentStateVoided()->shouldBe(false);
     }
 
+    function it_can_be_represented_as_array()
+    {
+        $this->toArray()->shouldBe($this->decodedJsonResponseBody());
+    }
+
     private function decodedJsonResponseBody()
     {
         $json = <<<JSON

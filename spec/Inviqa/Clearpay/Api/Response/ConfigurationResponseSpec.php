@@ -36,6 +36,15 @@ class ConfigurationResponseSpec extends ObjectBehavior
         $this->getMaximumAmount()->shouldBe("500.00");
     }
 
+    function it_can_be_represented_as_array(
+        Response $response
+    ) {
+        $response->asDecodedJson(true)->willReturn(
+            $this->fullJsonResponse()
+        );
+        $this->toArray()->shouldBe($this->fullJsonResponse());
+    }
+
     private function fullJsonResponse()
     {
         $json = <<<JSON
