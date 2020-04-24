@@ -35,6 +35,11 @@ class RefundSpec extends ObjectBehavior
         $this->amount()->currency()->shouldBe('GBP');
     }
 
+    function it_can_be_represented_as_array()
+    {
+        $this->toArray()->shouldBe($this->decodedJsonResponseBody());
+    }
+
     private function decodedJsonResponseBody()
     {
         $json = <<<JSON

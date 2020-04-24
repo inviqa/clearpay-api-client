@@ -37,6 +37,11 @@ class CreateSpec extends ObjectBehavior
             ->shouldBe('2020-03-30 17:55:21');
     }
 
+    function it_can_be_represented_as_array()
+    {
+        $this->toArray()->shouldBe($this->decodedJsonResponse());
+    }
+
     private function decodedJsonResponse()
     {
         $json = <<<JSON

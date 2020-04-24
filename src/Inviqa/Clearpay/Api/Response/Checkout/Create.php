@@ -21,6 +21,11 @@ class Create
     private $redirectCheckoutUrl;
 
     /**
+     * @var array
+     */
+    private $state = [];
+
+    /**
      * Create constructor.
      *
      * @param string                  $token
@@ -41,11 +46,15 @@ class Create
     {
         $state = $response->asDecodedJson(true);
 
-        return new self(
+        $checkout = new self(
             $state['token'],
             DateTime::fromTimeString($state['expires'])->asDateTime(),
             $state['redirectCheckoutUrl']
         );
+
+        $checkout->state = $state;
+
+        return $checkout;
     }
 
     public function token(): string
@@ -64,5 +73,10 @@ class Create
     public function redirectCheckoutUrl(): string
     {
         return $this->redirectCheckoutUrl;
+    }
+
+    public function toArray(): array
+    {
+        return $this->state;
     }
 }

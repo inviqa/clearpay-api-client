@@ -23,6 +23,11 @@ class ConfigurationResponse
      */
     private $maximumCurrency;
 
+    /**
+     * @var array
+     */
+    private $state = [];
+
     private function __construct(
         string $minimumAmount,
         string $minimumCurrency,
@@ -39,12 +44,16 @@ class ConfigurationResponse
     {
         $state = $response->asDecodedJson(true);
 
-        return new self(
+        $configuration = new self(
             $state['minimumAmount']['amount'] ?? '0.00',
             $state['minimumAmount']['currency'] ?? '',
             $state['maximumAmount']['amount'],
             $state['maximumAmount']['currency']
         );
+
+        $configuration->state = $state;
+
+        return $configuration;
     }
 
     public function getCurrencyCode(): string
@@ -60,5 +69,10 @@ class ConfigurationResponse
     public function getMaximumAmount(): string
     {
         return $this->maximumAmount;
+    }
+
+    public function toArray(): array
+    {
+        return $this->state;
     }
 }
