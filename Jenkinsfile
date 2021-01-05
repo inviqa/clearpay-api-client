@@ -1,7 +1,9 @@
 pipeline {
     agent {
         docker {
+            alwaysPull true
             image 'my127/php:7.2-fpm-stretch-console'
+            label 'my127ws'
         }
     }
     environment {
