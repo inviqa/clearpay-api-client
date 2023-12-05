@@ -2,6 +2,7 @@ pipeline {
     agent {
         docker {
             image 'my127/php:7.2-fpm-stretch-console'
+            label 'linux-amd64'
         }
     }
     environment {
